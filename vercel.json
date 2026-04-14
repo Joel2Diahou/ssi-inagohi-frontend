@@ -1,0 +1,16 @@
+{
+    "routes": [
+        { "src": "/", "dest": "/index.html" },
+        { "src": "/login", "dest": "/login.html" },
+        { "src": "/eleves", "dest": "/eleves.html" },
+        { "src": "/parents", "dest": "/parents.html" },
+        { "src": "/personnel", "dest": "/personnel.html" },
+        { "src": "/classes", "dest": "/classes.html" },
+        { "src": "/alertes", "dest": "/alertes.html" },
+        { "src": "/absences", "dest": "/absences.html" },
+        { "src": "/cameras", "dest": "/cameras.html" },
+        { "src": "/statistiques", "dest": "/statistiques.html" },
+        { "src": "/rapports", "dest": "/rapports.html" },
+        { "src": "/parametres", "dest": "/parametres.html" }
+    ]
+}

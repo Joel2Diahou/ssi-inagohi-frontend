@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réinitialisation - SSI Inagohi</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+        .logo {
+            margin-bottom: 30px;
+        }
+        .logo i {
+            font-size: 60px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo h1 {
+            color: #1e3c72;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(30, 60, 114, 0.3);
+        }
+        .btn-reset {
+            background: #ff6b35;
+        }
+        .btn-reset:hover {
+            background: #e55a2b;
+        }
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .info-box h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .info-box p {
+            margin: 10px 0;
+            color: #333;
+        }
+        .info-box code {
+            background: #e0e0e0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 16px;
+        }
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+        .success-message.show {
+            display: block;
+        }
+        .warning-message {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .btn-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+            <h1>SSI INAGOHI</h1>
+            <p>Réinitialisation des codes d'accès</p>
+        </div>
+        
+        <div class="warning-message">
+            <i class="fas fa-exclamation-triangle"></i> 
+            <strong>Attention :</strong> Cette action ne réinitialise que les codes sur <strong>votre navigateur</strong>. 
+            Elle n'affecte pas les autres utilisateurs.
+        </div>
+        
+        <div class="info-box">
+            <h3><i class="fas fa-key"></i> Codes par défaut</h3>
+            <p><strong>👑 Administrateur :</strong> <code id="code-admin">admininagohi2026</code></p>
+            <p><strong>📚 Éducateur :</strong> <code id="code-educateur">educateur2026</code></p>
+        </div>
+        
+        <div class="info-box">
+            <h3><i class="fas fa-database"></i> État actuel</h3>
+            <p><strong>Code Admin stocké :</strong> <span id="current-admin">-</span></p>
+            <p><strong>Code Éducateur stocké :</strong> <span id="current-educateur">-</span></p>
+            <p><strong>Session :</strong> <span id="session-status">-</span></p>
+        </div>
+        
+        <button class="btn" onclick="afficherEtatActuel()">
+            <i class="fas fa-sync-alt"></i> Rafraîchir l'état
+        </button>
+        
+        <button class="btn btn-reset" onclick="reinitialiserCodes()">
+            <i class="fas fa-undo-alt"></i> Réinitialiser les codes
+        </button>
+        
+        <button class="btn" onclick="viderSession()">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion (vider session)
+        </button>
+        
+        <div class="success-message" id="success-message">
+            <i class="fas fa-check-circle"></i> <span id="message-text">Codes réinitialisés avec succès !</span>
+        </div>
+        
+        <a href="login.html" class="btn-link">
+            <i class="fas fa-arrow-right"></i> Aller à la page de connexion
+        </a>
+        <br>
+        <a href="index.html" class="btn-link">
+            <i class="fas fa-home"></i> Tableau de bord (si connecté)
+        </a>
+    </div>
+    
+    <script>
+        // Codes par défaut
+        const CODES_PAR_DEFAUT = {
+            admin: "admininagohi2026",
+            educateur: "educateur2026"
+        };
+        
+        // Afficher l'état actuel
+        function afficherEtatActuel() {
+            // Vérifier les codes stockés
+            const saved = localStorage.getItem('ssi_codes');
+            
+            if (saved) {
+                try {
+                    const codes = JSON.parse(saved);
+                    document.getElementById('current-admin').textContent = codes.admin || 'Non défini';
+                    document.getElementById('current-educateur').textContent = codes.educateur || 'Non défini';
+                } catch(e) {
+                    document.getElementById('current-admin').textContent = 'Erreur';
+                    document.getElementById('current-educateur').textContent = 'Erreur';
+                }
+            } else {
+                document.getElementById('current-admin').textContent = 'Aucun (utilise par défaut)';
+                document.getElementById('current-educateur').textContent = 'Aucun (utilise par défaut)';
+            }
+            
+            // Vérifier la session
+            const loggedIn = sessionStorage.getItem('ssi_logged_in');
+            const role = sessionStorage.getItem('ssi_role');
+            
+            if (loggedIn === 'true') {
+                document.getElementById('session-status').textContent = `Connecté en tant que ${role || 'inconnu'}`;
+                document.getElementById('session-status').style.color = '#28a745';
+            } else {
+                document.getElementById('session-status').textContent = 'Non connecté';
+                document.getElementById('session-status').style.color = '#dc3545';
+            }
+        }
+        
+        // Réinitialiser les codes
+        function reinitialiserCodes() {
+            // Supprimer les codes stockés
+            localStorage.removeItem('ssi_codes');
+            
+            // Réinitialiser avec les codes par défaut
+            localStorage.setItem('ssi_codes', JSON.stringify(CODES_PAR_DEFAUT));
+            
+            // Afficher le message de succès
+            document.getElementById('message-text').textContent = '✅ Codes réinitialisés avec succès !';
+            document.getElementById('success-message').classList.add('show');
+            
+            // Rafraîchir l'affichage
+            afficherEtatActuel();
+            
+            // Cacher le message après 5 secondes
+            setTimeout(() => {
+                document.getElementById('success-message').classList.remove('show');
+            }, 5000);
+        }
+        
+        // Vider la session (déconnexion)
+        function viderSession() {
+            sessionStorage.clear();
+            document.getElementById('message-text').textContent = '✅ Session vidée ! Vous êtes déconnecté.';
+            document.getElementById('success-message').classList.add('show');
+            afficherEtatActuel();
+            
+            setTimeout(() => {
+                document.getElementById('success-message').classList.remove('show');
+            }, 5000);
+        }
+        
+        // Initialisation au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            afficherEtatActuel();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - SSI Inagohi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo i {
+            font-size: 60px;
+            color: #1e3c72;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo h1 {
+            color: #1e3c72;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group label i {
+            width: 20px;
+            color: #1e3c72;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-container input {
+            padding-right: 45px;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(30, 60, 114, 0.3);
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+        }
+        
+        .error-message.show {
+            display: block;
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 13px;
+        }
+        
+        .login-footer i {
+            color: #ff6b35;
+        }
+    /* ============================================ */
+/* RESPONSIVE DESIGN - ADAPTATION MOBILE/TABLETTE */
+/* ============================================ */
+
+/* Tablette (écran ≤ 1024px) */
+@media screen and (max-width: 1024px) {
+    :root {
+        --sidebar-width: 240px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .charts-grid,
+    .settings-grid,
+    .rapports-grid,
+    .cameras-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .grid-2 {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Mobile (écran ≤ 768px) */
+@media screen and (max-width: 768px) {
+    :root {
+        --sidebar-width: 0px;
+    }
+    
+    /* Sidebar devient cachée par défaut sur mobile */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        width: 260px;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    /* Contenu principal pleine largeur */
+    .main-content {
+        margin-left: 0 !important;
+        padding: 10px !important;
+    }
+    
+    /* Bouton menu mobile */
+    .mobile-menu-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        background: #1e3c72;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 22px;
+        cursor: pointer;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1001;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    /* Top bar avec espace pour le bouton menu */
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+        margin-top: 50px;
+        padding: 15px !important;
+    }
+    
+    /* Stats en 1 colonne */
+    .stats-grid,
+    .stats-mini {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+    
+    /* Dashboard en 1 colonne */
+    .dashboard-grid,
+    .bottom-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    /* Tableaux défilables */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    th, td {
+        min-width: 100px;
+    }
+    
+    /* Titres adaptés */
+    h1 { font-size: 20px !important; }
+    h2 { font-size: 18px !important; }
+    h3 { font-size: 16px !important; }
+    
+    /* Cartes */
+    .card, 
+    .stat-card, 
+    .setting-card, 
+    .chart-card, 
+    .rapport-card {
+        padding: 15px !important;
+    }
+    
+    /* Gros chiffres */
+    .big-number,
+    .compteur {
+        font-size: 48px !important;
+    }
+    
+    .stat-number {
+        font-size: 24px !important;
+    }
+    
+    /* Formulaires */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px !important;
+        padding: 12px !important;
+    }
+    
+    /* Boutons plus grands pour le tactile */
+    .btn, 
+    button:not(.mobile-menu-btn):not(.nav-item) {
+        padding: 12px 20px !important;
+        font-size: 14px !important;
+        width: 100% !important;
+        margin-bottom: 8px !important;
+    }
+    
+    /* Photo module */
+    .photo-module {
+        flex-direction: column !important;
+    }
+    
+    .photo-preview {
+        width: 100% !important;
+        height: 150px !important;
+        margin-bottom: 10px;
+    }
+    
+    .photo-options {
+        width: 100% !important;
+    }
+    
+    /* Filtres en colonne */
+    .filtres-bar {
+        flex-direction: column !important;
+    }
+    
+    .filtre-group {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+    
+    /* Modal */
+    .modal-content {
+        width: 95% !important;
+        padding: 20px !important;
+        margin: 10px !important;
+    }
+    
+    /* Caméra feed */
+    .camera-feed {
+        height: 200px !important;
+    }
+    
+    /* Classes list */
+    .classes-list {
+        flex-direction: column !important;
+    }
+    
+    .classe-tag {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+    
+    /* Niveau card */
+    .niveau-card {
+        padding: 10px !important;
+    }
+    
+    /* Masquer certains éléments sur mobile */
+    .hide-on-mobile {
+        display: none !important;
+    }
+    
+    /* Sidebar footer */
+    .sidebar-footer {
+        padding: 15px !important;
+    }
+    
+    .user-info-mini {
+        flex-direction: column !important;
+        text-align: center !important;
+    }
+    
+    /* Date/time dans top bar */
+    .datetime {
+        text-align: left !important;
+        width: 100% !important;
+    }
+    
+    .time {
+        font-size: 16px !important;
+    }
+}
+
+/* Petit mobile (écran ≤ 480px) */
+@media screen and (max-width: 480px) {
+    .main-content {
+        padding: 8px !important;
+    }
+    
+    .big-number,
+    .compteur {
+        font-size: 36px !important;
+    }
+    
+    .top-bar {
+        padding: 12px !important;
+    }
+    
+    .page-title h1 {
+        font-size: 18px !important;
+    }
+    
+    .page-title p {
+        font-size: 12px !important;
+    }
+    
+    /* Cartes */
+    .card, 
+    .stat-card {
+        padding: 12px !important;
+    }
+    
+    /* Alertes */
+    .alert-item {
+        flex-wrap: wrap !important;
+    }
+    
+    /* Caméras */
+    .camera-controls {
+        flex-direction: column !important;
+    }
+    
+    .camera-btn {
+        width: 100% !important;
+    }
+    
+    /* Pagination */
+    .pagination {
+        flex-wrap: wrap !important;
+    }
+}    
+    </style>
+</head>
+<body>
+    <!-- BOUTON MENU MOBILE -->
+<button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;">
+    <i class="fas fa-bars"></i>
+</button>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+            <h1>SSI INAGOHI</h1>
+            <p>Lycée Moderne - San Pedro</p>
+        </div>
+        
+        <div class="error-message" id="error-message">
+            <i class="fas fa-exclamation-circle"></i> <span id="error-text">Mot de passe incorrect</span>
+        </div>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label><i class="fas fa-key"></i> Mot de passe</label>
+                <div class="password-container">
+                    <input type="password" id="password" placeholder="Entrez votre code d'accès" required autocomplete="off">
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Se connecter
+            </button>
+        </form>
+        
+        <div class="login-footer">
+            <p><i class="fas fa-lock"></i> Accès sécurisé - Lycée Moderne Inagohi</p>
+            <p style="margin-top: 10px; opacity: 0.7;">© 2026 - San Pedro, Côte d'Ivoire</p>
+        </div>
+    </div>
+    
+    <script>
+        // ✅ URL DE L'API (AJOUTÉE)
+        const API_URL = 'https://systeme-de-securite-intelligente.onrender.com/api';
+        
+        // CODES D'ACCÈS PAR DÉFAUT
+        const CODES_PAR_DEFAUT = {
+            educateur: "educateur2026",
+            admin: "admininagohi2026"  // ✅ Corrigé pour correspondre à paramètres.html
+        };
+
+        // Pages autorisées par rôle
+        const PAGES_EDUCATEUR = ['eleves.html', 'parents.html', 'classes.html'];
+        const PAGES_ADMIN = ['index.html', 'eleves.html', 'parents.html', 'personnel.html', 'classes.html', 'alertes.html', 'absences.html', 'cameras.html', 'statistiques.html', 'rapports.html', 'parametres.html'];
+
+        // Récupérer les codes sauvegardés
+        function getCodes() {
+            const saved = localStorage.getItem('ssi_codes');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return CODES_PAR_DEFAUT;
+        }
+
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const icon = document.querySelector('.toggle-password');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            const CODES = getCodes(); // <-- Utiliser les codes sauvegardés
+            
+            let role = null;
+            let pagesAutorisees = [];
+            
+            if (password === CODES.admin) {
+                role = 'admin';
+                pagesAutorisees = PAGES_ADMIN;
+            } else if (password === CODES.educateur) {
+                role = 'educateur';
+                pagesAutorisees = PAGES_EDUCATEUR;
+            } else {
+                errorText.textContent = '❌ Code d\'accès incorrect';
+                errorDiv.classList.add('show');
+                document.getElementById('password').value = '';
+                return;
+            }
+            
+            sessionStorage.setItem('ssi_role', role);
+            sessionStorage.setItem('ssi_pages', JSON.stringify(pagesAutorisees));
+            sessionStorage.setItem('ssi_logged_in', 'true');
+            
+            window.location.href = pagesAutorisees[0];
+        });
+        
+        // Effacer l'erreur quand l'utilisateur tape
+        document.getElementById('password').addEventListener('input', function() {
+            document.getElementById('error-message').classList.remove('show');
+        });
+        
+        // Rediriger si déjà connecté
+        if (sessionStorage.getItem('ssi_logged_in') === 'true') {
+            window.location.href = 'index.html';
+        }
+        // TOGGLE MENU MOBILE
+function toggleMobileMenu() {
+    const sidebar = document.querySelector('.sidebar');
+    const icon = document.querySelector('.mobile-menu-btn i');
+    
+    sidebar.classList.toggle('open');
+    
+    if (sidebar.classList.contains('open')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+}
+
+// Fermer le menu si on clique en dehors
+document.addEventListener('click', function(event) {
+    const sidebar = document.querySelector('.sidebar');
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    
+    if (window.innerWidth <= 768) {
+        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
+            document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
+        }
+    }
+});
+
+// Fermer le menu après avoir cliqué sur un lien (mobile)
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+            document.querySelector('.sidebar').classList.remove('open');
+            document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
+            document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
+        }
+    });
+});
+    </script>
+</body>
+</html>
