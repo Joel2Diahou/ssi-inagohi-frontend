@@ -209,6 +209,45 @@
         }
         .action-btn.edit { background: var(--warning); color: var(--dark); }
         .action-btn.delete { background: var(--danger); color: white; }
+
+        /* NOTIFICATION TOAST */
+        .notification-toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 9999;
+            animation: slideIn 0.3s ease;
+            cursor: pointer;
+            transition: all 0.3s;
+            max-width: 400px;
+        }
+        .notification-toast:hover {
+            background: #218838;
+            transform: translateY(-3px);
+        }
+        .notification-toast i {
+            font-size: 24px;
+        }
+        .notification-toast .close-toast {
+            margin-left: 15px;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        .notification-toast .close-toast:hover {
+            opacity: 1;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
         
         /* RESPONSIVE */
         @media (max-width: 1200px) {
@@ -589,6 +628,14 @@ nav {
     .time {
         font-size: 16px !important;
     }
+    
+    /* Notification toast sur mobile */
+    .notification-toast {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        max-width: none;
+    }
 }
 
 /* Petit mobile (écran ≤ 480px) */
@@ -872,7 +919,6 @@ nav {
 (function() {
     const currentPage = window.location.pathname.split('/').pop();
     
-    // ✅ EXCLURE login.html ET reset.html
     if (currentPage === 'login.html' || currentPage === 'reset.html') {
         return;
     }
@@ -1060,13 +1106,44 @@ nav {
         }
         
         // ============================================
+        // NOTIFICATION POUR ASSOCIER UN PARENT
+        // ============================================
+        function afficherNotificationParent(nomEleve, prenomEleve) {
+            // Supprimer l'ancienne notification si elle existe
+            const oldToast = document.querySelector('.notification-toast');
+            if (oldToast) oldToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'notification-toast';
+            toast.innerHTML = `
+                <i class="fas fa-user-plus"></i>
+                <span><strong>${prenomEleve} ${nomEleve}</strong> a été enregistré !<br>👉 Cliquez ici pour associer un parent</span>
+                <i class="fas fa-times close-toast" onclick="this.parentElement.remove()"></i>
+            `;
+            
+            toast.onclick = (e) => {
+                if (!e.target.classList.contains('close-toast')) {
+                    window.location.href = 'parents.html';
+                }
+            };
+            
+            document.body.appendChild(toast);
+            
+            // Disparaît après 10 secondes
+            setTimeout(() => toast.remove(), 10000);
+        }
+        
+        // ============================================
         // AJOUTER UN ÉLÈVE VIA L'API
         // ============================================
         document.getElementById('form-eleve').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const nom = document.getElementById('nom').value.trim();
+            const prenom = document.getElementById('prenom').value.trim();
+            
             const data = {
-                nom: document.getElementById('nom').value.trim(),
-                prenom: document.getElementById('prenom').value.trim(),
+                nom: nom,
+                prenom: prenom,
                 sexe: document.getElementById('sexe').value,
                 classe: document.getElementById('classe').value,
                 photo_path: document.getElementById('photo-data').value || null
@@ -1080,6 +1157,7 @@ nav {
                 });
                 
                 if (response.ok) {
+                    afficherNotificationParent(nom, prenom);
                     alert('✅ Élève ajouté avec succès !');
                     resetForm();
                     chargerEleves();

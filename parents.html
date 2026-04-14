@@ -61,8 +61,10 @@
         .card h2 { color: var(--dark); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight:500; }
         .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        .form-group small { color: #666; font-size: 12px; display: block; margin-top: 5px; }
+        .form-group small i { color: var(--primary); }
         
         .photo-module { display: flex; gap: 15px; margin-bottom: 15px; }
         .photo-preview {
@@ -629,8 +631,16 @@ nav {
                 <form id="form-parent">
                     <div class="form-group"><label>Nom *</label><input type="text" id="nom" required></div>
                     <div class="form-group"><label>Prénom *</label><input type="text" id="prenom" required></div>
-                    <div class="form-group"><label>Téléphone *</label><input type="tel" id="telephone" required></div>
-                    <div class="form-group"><label>Email</label><input type="email" id="email"></div>
+                    <div class="form-group">
+                        <label><i class="fab fa-whatsapp"></i> Téléphone (WhatsApp) *</label>
+                        <input type="tel" id="telephone" placeholder="+225 XX XX XX XX">
+                        <small><i class="fas fa-info-circle"></i> Obligatoire si pas d'email. Sera utilisé pour les notifications.</small>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email (optionnel)</label>
+                        <input type="email" id="email" placeholder="parent@email.com">
+                        <small><i class="fas fa-info-circle"></i> Optionnel si le téléphone est fourni.</small>
+                    </div>
                     <div class="form-group"><label>Lien de parenté *</label>
                         <select id="lien" required>
                             <option value="">Sélectionner</option>
@@ -662,7 +672,7 @@ nav {
                 <h2><i class="fas fa-list"></i> Liste des parents</h2>
                 <input type="text" id="search" placeholder="🔍 Rechercher..." style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ddd; border-radius:6px;" onkeyup="filtrerParents()">
                 <table>
-                    <thead><tr><th>Photo</th><th>Nom</th><th>Téléphone</th><th>Élève</th><th>Actions</th></tr></thead>
+                    <thead><tr><th>Photo</th><th>Nom</th><th>Contact</th><th>Élève</th><th>Actions</th></tr></thead>
                     <tbody id="liste-parents"><tr><td colspan="5" style="text-align:center;">Chargement...</td></tr></tbody>
                 </table>
             </div>
@@ -794,11 +804,20 @@ nav {
         document.getElementById('form-parent').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            const telephone = document.getElementById('telephone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            // Vérifier qu'au moins un moyen de contact est fourni
+            if (!telephone && !email) {
+                alert('❌ Veuillez fournir au moins un numéro de téléphone ou un email');
+                return;
+            }
+            
             const data = {
                 nom: document.getElementById('nom').value.trim(),
                 prenom: document.getElementById('prenom').value.trim(),
-                telephone: document.getElementById('telephone').value.trim(),
-                email: document.getElementById('email').value.trim() || null,
+                telephone: telephone || null,
+                email: email || null,
                 lien: document.getElementById('lien').value,
                 eleve_id: parseInt(document.getElementById('eleve-associe').value),
                 photo: document.getElementById('photo-data').value || null
@@ -832,22 +851,27 @@ nav {
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Aucun parent enregistré</td></tr>'; 
                 return; 
             }
-            tbody.innerHTML = parents.map(p => `
+            tbody.innerHTML = parents.map(p => {
+                const contact = p.email || p.telephone || 'Aucun contact';
+                return `
                 <tr>
                     <td>${p.photo ? `<img src="${p.photo}" width="40" height="40" style="border-radius:50%;">` : '<i class="fas fa-user"></i>'}</td>
                     <td>${p.nom} ${p.prenom}</td>
-                    <td>${p.telephone}</td>
+                    <td>${contact}</td>
                     <td>${p.eleve_nom || 'Élève ' + p.eleve_id}</td>
                     <td><button class="btn btn-danger" style="padding:5px 10px;" onclick="supprimerParent(${p.id})"><i class="fas fa-trash"></i></button></td>
                 </tr>
-            `).join('');
+            `}).join('');
         }
         
         function filtrerParents() {
             const recherche = document.getElementById('search').value.toLowerCase();
             const filtres = parents.filter(p => p.nom.toLowerCase().includes(recherche) || p.prenom.toLowerCase().includes(recherche));
             const tbody = document.getElementById('liste-parents');
-            tbody.innerHTML = filtres.map(p => `<tr><td>${p.photo ? `<img src="${p.photo}" width="40">` : '👤'}</td><td>${p.nom} ${p.prenom}</td><td>${p.telephone}</td><td>${p.eleve_nom || 'Élève ' + p.eleve_id}</td><td><button class="btn btn-danger" onclick="supprimerParent(${p.id})">🗑️</button></td></tr>`).join('');
+            tbody.innerHTML = filtres.map(p => {
+                const contact = p.email || p.telephone || 'Aucun contact';
+                return `<tr><td>${p.photo ? `<img src="${p.photo}" width="40">` : '👤'}</td><td>${p.nom} ${p.prenom}</td><td>${contact}</td><td>${p.eleve_nom || 'Élève ' + p.eleve_id}</td><td><button class="btn btn-danger" onclick="supprimerParent(${p.id})">🗑️</button></td></tr>`;
+            }).join('');
         }
         
         // ============================================
