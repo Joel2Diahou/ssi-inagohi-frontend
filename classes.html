@@ -580,7 +580,12 @@ nav {
                     <div class="form-group"><label>Nom de la section *</label><input type="text" id="section" required placeholder="Ex: A, B, C, D..."></div>
                     <div class="form-group"><label>Nom complet de la classe (généré)</label><input type="text" id="nom-complet" readonly style="background:#f0f0f0;"></div>
                     <div class="form-group"><label>Salle principale</label><input type="text" id="salle" placeholder="Ex: Bâtiment A - Salle 12"></div>
-                    <button type="submit" class="btn btn-success" style="width:100%;"><i class="fas fa-save"></i> Créer la classe</button>
+                    <button type="submit" class="btn btn-success" style="width:100%;">
+    <i class="fas fa-save"></i> Créer la classe
+</button>
+<button type="button" class="btn" onclick="resetForm()" style="width:100%; margin-top:10px; background:#6c757d; color:white;">
+    <i class="fas fa-undo"></i> Réinitialiser
+</button>
                 </form>
             </div>
             
@@ -837,6 +842,10 @@ nav {
                 }
             });
         });
+        function resetForm() {
+    document.getElementById('form-classe').reset();
+    document.getElementById('nom-complet').value = '';
+}
     </script>
 </body>
 </html>

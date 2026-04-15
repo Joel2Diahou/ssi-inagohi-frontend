@@ -277,286 +277,62 @@
         .close-modal { font-size: 24px; cursor: pointer; }
         .detail-info { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0; }
         
-        
-       /* ============================================ */
-/* RESPONSIVE DESIGN - ADAPTATION MOBILE/TABLETTE */
-/* ============================================ */
+        /* BOUTON RETOUR HAUT */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 9999;
+            border: 2px solid white;
+        }
+        #back-to-top.show { display: flex; }
+        #back-to-top:hover { background: var(--accent); transform: translateY(-5px); }
 
-/* Tablette (écran ≤ 1024px) */
-@media screen and (max-width: 1024px) {
-    :root {
-        --sidebar-width: 240px;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-    
-    .charts-grid,
-    .settings-grid,
-    .rapports-grid,
-    .cameras-grid {
-        grid-template-columns: 1fr !important;
-    }
-    
-    .grid-2 {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-/* Mobile (écran ≤ 768px) */
-@media screen and (max-width: 768px) {
-    :root {
-        --sidebar-width: 0px;
-    }
-    
-    /* Sidebar devient cachée par défaut sur mobile */
-    .sidebar {
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 1000;
-        width: 260px;
-    }
-    
-    .sidebar.open {
-        transform: translateX(0);
-    }
-    
-    /* Contenu principal pleine largeur */
-    .main-content {
-        margin-left: 0 !important;
-        padding: 10px !important;
-    }
-    
-    /* Bouton menu mobile */
-    .mobile-menu-btn {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        width: 45px;
-        height: 45px;
-        background: #1e3c72;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 22px;
-        cursor: pointer;
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        z-index: 1001;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    
-    /* Top bar avec espace pour le bouton menu */
-    .top-bar {
-        flex-direction: column;
-        align-items: flex-start !important;
-        gap: 10px;
-        margin-top: 50px;
-        padding: 15px !important;
-    }
-    
-    /* Stats en 1 colonne */
-    .stats-grid,
-    .stats-mini {
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
-    }
-    
-    /* Dashboard en 1 colonne */
-    .dashboard-grid,
-    .bottom-grid {
-        grid-template-columns: 1fr !important;
-        gap: 15px !important;
-    }
-    
-    /* Tableaux défilables */
-    table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    th, td {
-        min-width: 100px;
-    }
-    
-    /* Titres adaptés */
-    h1 { font-size: 20px !important; }
-    h2 { font-size: 18px !important; }
-    h3 { font-size: 16px !important; }
-    
-    /* Cartes */
-    .card, 
-    .stat-card, 
-    .setting-card, 
-    .chart-card, 
-    .rapport-card {
-        padding: 15px !important;
-    }
-    
-    /* Gros chiffres */
-    .big-number,
-    .compteur {
-        font-size: 48px !important;
-    }
-    
-    .stat-number {
-        font-size: 24px !important;
-    }
-    
-    /* Formulaires */
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 16px !important;
-        padding: 12px !important;
-    }
-    
-    /* Boutons plus grands pour le tactile */
-    .btn, 
-    button:not(.mobile-menu-btn):not(.nav-item) {
-        padding: 12px 20px !important;
-        font-size: 14px !important;
-        width: 100% !important;
-        margin-bottom: 8px !important;
-    }
-    
-    /* Photo module */
-    .photo-module {
-        flex-direction: column !important;
-    }
-    
-    .photo-preview {
-        width: 100% !important;
-        height: 150px !important;
-        margin-bottom: 10px;
-    }
-    
-    .photo-options {
-        width: 100% !important;
-    }
-    
-    /* Filtres en colonne */
-    .filtres-bar {
-        flex-direction: column !important;
-    }
-    
-    .filtre-group {
-        width: 100% !important;
-        min-width: 100% !important;
-    }
-    
-    /* Modal */
-    .modal-content {
-        width: 95% !important;
-        padding: 20px !important;
-        margin: 10px !important;
-    }
-    
-    /* Caméra feed */
-    .camera-feed {
-        height: 200px !important;
-    }
-    
-    /* Classes list */
-    .classes-list {
-        flex-direction: column !important;
-    }
-    
-    .classe-tag {
-        width: 100% !important;
-        justify-content: space-between !important;
-    }
-    
-    /* Niveau card */
-    .niveau-card {
-        padding: 10px !important;
-    }
-    
-    /* Masquer certains éléments sur mobile */
-    .hide-on-mobile {
-        display: none !important;
-    }
-    
-    /* Sidebar footer */
-    .sidebar-footer {
-        padding: 15px !important;
-    }
-    
-    .user-info-mini {
-        flex-direction: column !important;
-        text-align: center !important;
-    }
-    
-    /* Date/time dans top bar */
-    .datetime {
-        text-align: left !important;
-        width: 100% !important;
-    }
-    
-    .time {
-        font-size: 16px !important;
-    }
-}
-
-/* Petit mobile (écran ≤ 480px) */
-@media screen and (max-width: 480px) {
-    .main-content {
-        padding: 8px !important;
-    }
-    
-    .big-number,
-    .compteur {
-        font-size: 36px !important;
-    }
-    
-    .top-bar {
-        padding: 12px !important;
-    }
-    
-    .page-title h1 {
-        font-size: 18px !important;
-    }
-    
-    .page-title p {
-        font-size: 12px !important;
-    }
-    
-    /* Cartes */
-    .card, 
-    .stat-card {
-        padding: 12px !important;
-    }
-    
-    /* Alertes */
-    .alert-item {
-        flex-wrap: wrap !important;
-    }
-    
-    /* Caméras */
-    .camera-controls {
-        flex-direction: column !important;
-    }
-    
-    .camera-btn {
-        width: 100% !important;
-    }
-    
-    /* Pagination */
-    .pagination {
-        flex-wrap: wrap !important;
-    }
-}
+        /* RESPONSIVE */
+        @media screen and (max-width: 1024px) {
+            :root { --sidebar-width: 240px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media screen and (max-width: 768px) {
+            :root { --sidebar-width: 0px; }
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; z-index: 1000; width: 260px; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0 !important; padding: 10px !important; }
+            .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; width: 45px; height: 45px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 22px; cursor: pointer; position: fixed; top: 10px; left: 10px; z-index: 1001; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+            .top-bar { flex-direction: column; align-items: flex-start !important; gap: 10px; margin-top: 50px; padding: 15px !important; }
+            .stats-grid { grid-template-columns: 1fr !important; }
+            table { display: block; overflow-x: auto; white-space: nowrap; }
+            h1 { font-size: 20px !important; }
+            .filtres-bar { flex-direction: column !important; }
+            .filtre-group { width: 100% !important; }
+            .modal-content { width: 95% !important; padding: 20px !important; }
+        }
+        @media screen and (max-width: 480px) {
+            .main-content { padding: 8px !important; }
+            .top-bar { padding: 12px !important; }
+            .page-title h1 { font-size: 18px !important; }
+        }
     </style>
 </head>
 <body>
     <!-- BOUTON MENU MOBILE -->
-<button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;">
-    <i class="fas fa-bars"></i>
-</button>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="logo">
@@ -634,25 +410,28 @@
     <button id="back-to-top" title="Retour en haut"><i class="fas fa-arrow-up"></i></button>
     
     <script>
-        // Vérification d'accès
-(function() {
-    const role = sessionStorage.getItem('ssi_role');
-    const pagesAutorisees = JSON.parse(sessionStorage.getItem('ssi_pages') || '[]');
-    const currentPage = window.location.pathname.split('/').pop();
-    
-    // Si pas connecté, rediriger vers login
-    if (sessionStorage.getItem('ssi_logged_in') !== 'true') {
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    // Si la page n'est pas dans les pages autorisées, rediriger vers index ou page d'erreur
-    if (!pagesAutorisees.includes(currentPage) && currentPage !== 'login.html') {
-        alert('⛔ Accès refusé. Vous n\'avez pas les droits pour accéder à cette page.');
-        window.location.href = role === 'admin' ? 'index.html' : 'eleves.html';
-    }
-})();
+        // ✅ URL DE L'API
         const API_URL = 'https://systeme-de-securite-intelligente.onrender.com/api';
+        
+        // Vérification d'accès
+        (function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            if (currentPage === 'login.html' || currentPage === 'reset.html') return;
+            
+            const role = sessionStorage.getItem('ssi_role');
+            const pagesAutorisees = JSON.parse(sessionStorage.getItem('ssi_pages') || '[]');
+            
+            if (sessionStorage.getItem('ssi_logged_in') !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            if (!pagesAutorisees.includes(currentPage)) {
+                alert('⛔ Accès refusé. Vous n\'avez pas les droits pour accéder à cette page.');
+                window.location.href = role === 'admin' ? 'index.html' : 'eleves.html';
+            }
+        })();
+
         let toutesLesAlertes = [];
         
         function updateDateTime() {
@@ -665,21 +444,24 @@
         }
         setInterval(updateDateTime, 1000); updateDateTime();
         
-        function genererDonneesDemo() {
-            return [
-                { id: 1, type: 'intrusion', date: '2026-04-11', heure: '08:15:22', lieu: 'Portail principal', details: 'Personne non identifiée', statut: 'non_traite' },
-                { id: 2, type: 'objet_dangereux', date: '2026-04-11', heure: '09:30:10', lieu: 'Portail principal', details: 'Couteau détecté', statut: 'non_traite' },
-                { id: 3, type: 'intrusion', date: '2026-04-10', heure: '14:20:05', lieu: 'Portail secondaire', details: 'Tentative d\'escalade', statut: 'traite' },
-                { id: 4, type: 'bagarre', date: '2026-04-10', heure: '10:45:33', lieu: 'Cour de récréation', details: 'Attroupement suspect', statut: 'traite' },
-                { id: 5, type: 'objet_dangereux', date: '2026-04-09', heure: '11:20:00', lieu: 'Salle 4ème A', details: 'Téléphone détecté', statut: 'traite' },
-            ];
-        }
-        
-        function chargerAlertes() {
-            toutesLesAlertes = genererDonneesDemo();
-            afficherAlertes(toutesLesAlertes);
-            mettreAJourStats();
-            updateAlertesCount();
+        // ============================================
+        // CHARGER LES ALERTES DEPUIS L'API
+        // ============================================
+        async function chargerAlertes() {
+            try {
+                const response = await fetch(API_URL + '/alertes');
+                if (!response.ok) throw new Error('Erreur API');
+                toutesLesAlertes = await response.json();
+                afficherAlertes(toutesLesAlertes);
+                mettreAJourStats();
+                updateAlertesCount();
+            } catch (error) {
+                console.error('Erreur:', error);
+                toutesLesAlertes = [];
+                afficherAlertes([]);
+                mettreAJourStats();
+                updateAlertesCount();
+            }
         }
         
         function afficherAlertes(alertes) {
@@ -696,8 +478,8 @@
                 return `<tr onclick="voirDetail(${a.id})">
                     <td>${a.date} ${a.heure}</td>
                     <td><span class="badge ${badgeType}">${texteType}</span></td>
-                    <td>${a.lieu}</td>
-                    <td>${a.details}</td>
+                    <td>${a.lieu || '-'}</td>
+                    <td>${a.details || '-'}</td>
                     <td><span class="badge ${badgeStatut}">${a.statut === 'traite' ? '✅ Traité' : '⏳ Non traité'}</span></td>
                     <td onclick="event.stopPropagation()"><button class="action-btn" onclick="marquerTraite(${a.id})" ${a.statut === 'traite' ? 'disabled' : ''}>✅ Traiter</button></td>
                 </tr>`;
@@ -738,8 +520,8 @@
                 <div class="detail-info">
                     <p><strong>📅 Date :</strong> ${a.date}</p>
                     <p><strong>🕐 Heure :</strong> ${a.heure}</p>
-                    <p><strong>📍 Lieu :</strong> ${a.lieu}</p>
-                    <p><strong>📝 Détails :</strong> ${a.details}</p>
+                    <p><strong>📍 Lieu :</strong> ${a.lieu || '-'}</p>
+                    <p><strong>📝 Détails :</strong> ${a.details || '-'}</p>
                     <p><strong>📊 Statut :</strong> ${a.statut === 'traite' ? '✅ Traité' : '⏳ En attente'}</p>
                 </div>
                 <div style="display:flex; gap:10px;">
@@ -751,14 +533,28 @@
         }
         
         function fermerModal() { document.getElementById('modal-detail').style.display = 'none'; }
-        function marquerTraite(id) {
-            const alerte = toutesLesAlertes.find(a => a.id === id);
-            if (alerte) alerte.statut = 'traite';
-            afficherAlertes(toutesLesAlertes);
-            mettreAJourStats();
-            updateAlertesCount();
+        
+        async function marquerTraite(id) {
+            try {
+                const response = await fetch(API_URL + '/alertes/' + id + '/traiter', {
+                    method: 'PUT'
+                });
+                if (response.ok) {
+                    const alerte = toutesLesAlertes.find(a => a.id === id);
+                    if (alerte) alerte.statut = 'traite';
+                    afficherAlertes(toutesLesAlertes);
+                    mettreAJourStats();
+                    updateAlertesCount();
+                }
+            } catch (error) { console.error('Erreur:', error); }
         }
-        function deconnexion() { if (confirm('Déconnexion ?')) window.location.href = 'login.html'; }
+        
+        function deconnexion() { 
+            if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
+                sessionStorage.clear();
+                window.location.href = 'login.html';
+            }
+        }
         
         function updateAlertesCount() {
             const nonTraitees = toutesLesAlertes.filter(a => a.statut === 'non_traite').length;
@@ -769,7 +565,6 @@
             }
         }
         
-        // Bouton retour haut
         const backToTop = document.getElementById('back-to-top');
         window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 300));
         backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -783,46 +578,41 @@
             });
             chargerAlertes();
         });
-        // TOGGLE MENU MOBILE
-function toggleMobileMenu() {
-    const sidebar = document.querySelector('.sidebar');
-    const icon = document.querySelector('.mobile-menu-btn i');
-    
-    sidebar.classList.toggle('open');
-    
-    if (sidebar.classList.contains('open')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-times');
-    } else {
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-    }
-}
-
-// Fermer le menu si on clique en dehors
-document.addEventListener('click', function(event) {
-    const sidebar = document.querySelector('.sidebar');
-    const menuBtn = document.querySelector('.mobile-menu-btn');
-    
-    if (window.innerWidth <= 768) {
-        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && sidebar.classList.contains('open')) {
-            sidebar.classList.remove('open');
-            document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
-            document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
+        
+        function toggleMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            const icon = document.querySelector('.mobile-menu-btn i');
+            sidebar.classList.toggle('open');
+            if (sidebar.classList.contains('open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         }
-    }
-});
 
-// Fermer le menu après avoir cliqué sur un lien (mobile)
-document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function() {
-        if (window.innerWidth <= 768) {
-            document.querySelector('.sidebar').classList.remove('open');
-            document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
-            document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
-        }
-    });
-});
+        document.addEventListener('click', function(event) {
+            const sidebar = document.querySelector('.sidebar');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                    document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
+                    document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
+                }
+            }
+        });
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.sidebar').classList.remove('open');
+                    document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
+                    document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
+                }
+            });
+        });
     </script>
 </body>
 </html>

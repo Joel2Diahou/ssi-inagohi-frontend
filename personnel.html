@@ -502,10 +502,10 @@ nav {
             <i class="fas fa-user-friends"></i>
             <span>Parents</span>
         </a>
-        <a href="personnel.html" class="nav-item active">
-            <i class="fas fa-chalkboard-teacher"></i>
-            <span>Personnel</span>
-        </a>
+        <a href="personnel.html" class="nav-item">
+    <i class="fas fa-chalkboard-teacher"></i>
+    <span>Personnel</span>
+</a>
         <a href="classes.html" class="nav-item">
             <i class="fas fa-door-open"></i>
             <span>Classes</span>
@@ -611,7 +611,12 @@ nav {
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-success" style="width:100%;"><i class="fas fa-save"></i> Enregistrer</button>
+                    <button type="submit" class="btn btn-success" style="width:100%;">
+    <i class="fas fa-save"></i> Enregistrer
+</button>
+<button type="button" class="btn" onclick="resetForm()" style="width:100%; margin-top:10px; background:#6c757d; color:white;">
+    <i class="fas fa-undo"></i> Réinitialiser
+</button>
                 </form>
             </div>
             
@@ -927,6 +932,11 @@ nav {
                 }
             });
         });
+        function resetForm() {
+    document.getElementById('form-personnel').reset();
+    document.getElementById('photo-preview').innerHTML = '<i class="fas fa-user"></i>';
+    document.getElementById('photo-data').value = '';
+}
     </script>
 </body>
 </html>
