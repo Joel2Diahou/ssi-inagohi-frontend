@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Absences - SSI Inagohi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #1e3c72; --secondary: #2a5298; --accent: #ff6b35; --success: #28a745; --danger: #dc3545; --warning: #ffc107; --dark: #1a1a2e; --light: #f8f9fa; --sidebar-width: 280px; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--light); display: flex; min-height: 100vh; }
+        
+        .sidebar { width: var(--sidebar-width); background: linear-gradient(180deg, #1e3c72 0%, #1a1a2e 100%); color: white; position: fixed; height: 100vh; overflow-y: auto; display: flex; flex-direction: column; box-shadow: 4px 0 20px rgba(0,0,0,0.1); z-index: 100; }
+        .logo { padding: 25px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo h2 { font-size: 22px; background: linear-gradient(135deg, #fff, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-item { display: flex; align-items: center; padding: 14px 25px; color: rgba(255,255,255,0.75); text-decoration: none; border-left: 4px solid transparent; }
+        .nav-item i { width: 28px; margin-right: 15px; }
+        .nav-item:hover { background: rgba(255,255,255,0.08); color: white; }
+        .nav-item.active { background: rgba(255,107,53,0.15); border-left-color: #ff6b35; }
+        .nav-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 15px 20px; }
+        .sidebar-footer { padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto; }
+        .user-info-mini { display: flex; align-items: center; gap: 12px; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 10px; }
+        .user-info-mini i { font-size: 40px; color: #ff6b35; }
+        
+        .main-content { margin-left: var(--sidebar-width); flex: 1; padding: 20px; }
+        .top-bar { display: flex; justify-content: space-between; background: white; padding: 15px 25px; border-radius: 12px; margin-bottom: 25px; }
+        .page-title h1 { font-size: 24px; color: var(--dark); }
+        
+        .info-prof { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; gap: 30px; align-items: center; }
+        .info-prof .classe-badge { background: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; font-size: 18px; font-weight: bold; }
+        .info-prof .cours-actuel { color: var(--dark); }
+        
+        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .card h2 { margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; color: var(--danger); }
+        .card h2 i { color: var(--danger); }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; color: var(--dark); font-weight: 600; }
+        tr:hover { background: #f8f9fa; }
+        
+        .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .badge-warning { background: var(--warning); color: var(--dark); }
+        .badge-success { background: var(--success); color: white; }
+        .badge-danger { background: var(--danger); color: white; }
+        
+        .permission-group { display: flex; gap: 15px; }
+        .permission-option { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .permission-option input { cursor: pointer; width: 18px; height: 18px; }
+        
+        .btn { padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .btn-success { background: var(--success); }
+        .btn-warning { background: var(--warning); color: var(--dark); }
+        
+        .message-info { background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; color: var(--primary); }
+        .message-info i { margin-right: 10px; }
+        
+        @media (max-width: 768px) {
+            .main-content { margin-left: 0 !important; padding: 10px !important; }
+            .info-prof { flex-direction: column; align-items: flex-start; gap: 10px; }
+            table { display: block; overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;"><i class="fas fa-bars"></i></button>
+    
+    <div class="sidebar">
+        <div class="logo"><h2>🛡️ SSI INAGOHI</h2><p>Lycée Moderne - San Pedro</p></div>
+        <nav>
+            <a href="index.html" class="nav-item"><i class="fas fa-tachometer-alt"></i><span>Tableau de bord</span></a>
+            <a href="validation_absences.html" class="nav-item active"><i class="fas fa-check-circle"></i><span>Valider absences</span></a>
+            <div class="nav-divider"></div>
+            <a href="javascript:void(0);" class="nav-item" onclick="deconnexion()"><i class="fas fa-sign-out-alt"></i><span>Déconnexion</span></a>
+        </nav>
+        <div class="sidebar-footer"><div class="user-info-mini"><i class="fas fa-user-circle"></i><div><strong id="user-role">Professeur</strong><span id="user-email"></span></div></div></div>
+    </div>
+    
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title"><h1>Validation des absences</h1><p>Confirmer les permissions accordées</p></div>
+            <div id="current-date"></div>
+        </div>
+        
+        <div class="info-prof">
+            <div><span class="classe-badge" id="classe-prof">Chargement...</span></div>
+            <div class="cours-actuel"><i class="fas fa-clock"></i> <span id="cours-actuel">Aucun cours en ce moment</span></div>
+        </div>
+        
+        <div class="message-info" id="message-attente">
+            <i class="fas fa-info-circle"></i> Les absences ci-dessous ont été détectées pendant votre cours. Veuillez indiquer si l'élève avait demandé la permission.
+        </div>
+        
+        <div class="card">
+            <h2><i class="fas fa-user-clock"></i> Absences à valider</h2>
+            <div id="absences-container">
+                <p style="text-align:center; color:#999;">Chargement des absences...</p>
+            </div>
+        </div>
+        
+        <div style="text-align:right;">
+            <button class="btn btn-success" onclick="validerAbsences()" style="padding:12px 30px; font-size:16px;">
+                <i class="fas fa-check"></i> ENREGISTRER LES VALIDATIONS
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'https://systeme-de-securite-intelligente.onrender.com/api';
+        let absencesAValider = [];
+        let professeurId = null;
+        
+        // Vérification d'accès
+        (function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            if (currentPage === 'login.html' || currentPage === 'reset.html') return;
+            const role = sessionStorage.getItem('ssi_role');
+            if (sessionStorage.getItem('ssi_logged_in') !== 'true') { window.location.href = 'login.html'; return; }
+            
+            // Récupérer les infos du professeur
+            professeurId = sessionStorage.getItem('ssi_user_id');
+            const userNom = sessionStorage.getItem('ssi_user_nom');
+            document.getElementById('user-role').textContent = role === 'professeur' ? 'Professeur' : role;
+            document.getElementById('user-email').textContent = userNom || '';
+        })();
+        
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('fr-FR', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+        
+        // ============================================
+        // CHARGER LA CLASSE DU PROFESSEUR
+        // ============================================
+        async function chargerClasseProfesseur() {
+            try {
+                const r = await fetch(API_URL + '/emploi_du_temps');
+                const edt = await r.json();
+                const aujourdhui = new Date().getDay() - 1; // 0=lundi
+                const maintenant = new Date().toTimeString().slice(0,5);
+                
+                const coursActuel = edt.find(c => 
+                    c.professeur_id == professeurId && 
+                    c.jour_semaine === aujourdhui &&
+                    c.heure_debut <= maintenant && 
+                    c.heure_fin >= maintenant
+                );
+                
+                if (coursActuel) {
+                    document.getElementById('classe-prof').textContent = coursActuel.classe;
+                    document.getElementById('cours-actuel').innerHTML = `<i class="fas fa-clock"></i> ${coursActuel.heure_debut} - ${coursActuel.heure_fin}`;
+                    chargerAbsences(coursActuel.classe);
+                } else {
+                    document.getElementById('classe-prof').textContent = 'Pas de cours';
+                    document.getElementById('cours-actuel').textContent = 'Aucun cours en ce moment';
+                    document.getElementById('message-attente').innerHTML = '<i class="fas fa-coffee"></i> Vous n\'avez pas de cours actuellement. Revenez pendant vos heures de cours.';
+                }
+            } catch(e) { console.error(e); }
+        }
+        
+        // ============================================
+        // CHARGER LES ABSENCES À VALIDER
+        // ============================================
+        async function chargerAbsences(classe) {
+            try {
+                const aujourdhui = new Date().toISOString().split('T')[0];
+                const r = await fetch(`${API_URL}/absences?date=${aujourdhui}`);
+                const absences = await r.json();
+                
+                // Filtrer les absences de cette classe NON VALIDÉES
+                absencesAValider = absences.filter(a => 
+                    a.classe === classe && 
+                    a.permission_accordee === null
+                );
+                
+                afficherAbsences(absencesAValider);
+            } catch(e) { console.error(e); }
+        }
+        
+        function afficherAbsences(absences) {
+            const container = document.getElementById('absences-container');
+            
+            if (absences.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:var(--success); padding:30px;"><i class="fas fa-check-circle" style="font-size:40px;"></i><br>Aucune absence à valider pour ce cours</p>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Élève</th>
+                            <th>Heure début</th>
+                            <th>Heure fin</th>
+                            <th>Durée</th>
+                            <th>Permission demandée ?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${absences.map(a => `
+                            <tr>
+                                <td><i class="fas fa-user-graduate"></i> ${a.eleve_nom}</td>
+                                <td><i class="far fa-clock"></i> ${a.heure_debut}</td>
+                                <td><i class="far fa-clock"></i> ${a.heure_fin || 'En cours'}</td>
+                                <td>${a.duree_minutes || '-'} min</td>
+                                <td>
+                                    <div class="permission-group" data-id="${a.id}">
+                                        <label class="permission-option">
+                                            <input type="radio" name="perm_${a.id}" value="oui"> ✓ Oui
+                                        </label>
+                                        <label class="permission-option">
+                                            <input type="radio" name="perm_${a.id}" value="non"> ✗ Non
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+        
+        // ============================================
+        // VALIDER LES ABSENCES
+        // ============================================
+        async function validerAbsences() {
+            const validations = [];
+            
+            document.querySelectorAll('.permission-group').forEach(group => {
+                const id = group.dataset.id;
+                const selected = group.querySelector('input:checked');
+                
+                if (selected) {
+                    validations.push({
+                        absence_id: parseInt(id),
+                        permission_accordee: selected.value === 'oui'
+                    });
+                }
+            });
+            
+            if (validations.length === 0) {
+                alert('⚠️ Veuillez sélectionner une option pour chaque absence.');
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_URL + '/absences/valider', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        professeur_id: professeurId,
+                        validations: validations
+                    })
+                });
+                
+                if (response.ok) {
+                    alert('✅ Validations enregistrées avec succès !');
+                    location.reload();
+                } else {
+                    alert('❌ Erreur lors de la validation');
+                }
+            } catch(e) {
+                console.error(e);
+                alert('❌ Erreur de connexion');
+            }
+        }
+        
+        function deconnexion() { if (confirm('Déconnexion ?')) { sessionStorage.clear(); window.location.href = 'login.html'; } }
+        
+        // Initialisation
+        chargerClasseProfesseur();
+        
+        function toggleMobileMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

@@ -458,15 +458,15 @@
         // ✅ URL DE L'API (AJOUTÉE)
         const API_URL = 'https://systeme-de-securite-intelligente.onrender.com/api';
         
-        // CODES D'ACCÈS PAR DÉFAUT
         const CODES_PAR_DEFAUT = {
-            educateur: "educateur2026",
-            admin: "admininagohi2026"  // ✅ Corrigé pour correspondre à paramètres.html
-        };
+    educateur: "educateur2026",
+    admin: "admininagohi2026",
+    professeur: "professeur2026"  // 🆕
+};
 
-        // Pages autorisées par rôle
-        const PAGES_EDUCATEUR = ['eleves.html', 'parents.html', 'classes.html'];
-        const PAGES_ADMIN = ['index.html', 'eleves.html', 'parents.html', 'personnel.html', 'classes.html', 'alertes.html', 'absences.html', 'cameras.html', 'statistiques.html', 'rapports.html', 'parametres.html'];
+    const PAGES_EDUCATEUR = ['eleves.html', 'parents.html', 'classes.html', 'absences.html', 'emploi_du_temps.html'];
+    const PAGES_PROFESSEUR = ['index.html', 'validation_absences.html', 'absences.html'];  // 🆕
+    const PAGES_ADMIN = ['index.html', 'eleves.html', 'parents.html', 'personnel.html', 'classes.html', 'emploi_du_temps.html', 'alertes.html', 'absences.html', 'cameras.html', 'statistiques.html', 'rapports.html', 'parametres.html'];
 
         // Récupérer les codes sauvegardés
         function getCodes() {
@@ -501,13 +501,16 @@
             let role = null;
             let pagesAutorisees = [];
             
-            if (password === CODES.admin) {
-                role = 'admin';
-                pagesAutorisees = PAGES_ADMIN;
-            } else if (password === CODES.educateur) {
-                role = 'educateur';
-                pagesAutorisees = PAGES_EDUCATEUR;
-            } else {
+             if (password === CODES.admin) {
+    role = 'admin';
+    pagesAutorisees = PAGES_ADMIN;
+} else if (password === CODES.educateur) {
+    role = 'educateur';
+    pagesAutorisees = PAGES_EDUCATEUR;
+} else if (password === CODES.professeur) {  // 🆕
+    role = 'professeur';
+    pagesAutorisees = PAGES_PROFESSEUR;
+}else {
                 errorText.textContent = '❌ Code d\'accès incorrect';
                 errorDiv.classList.add('show');
                 document.getElementById('password').value = '';

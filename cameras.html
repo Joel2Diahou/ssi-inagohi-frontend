@@ -91,6 +91,23 @@
         .date { font-weight: 600; color: var(--dark); }
         .time { font-size: 20px; font-weight: bold; color: var(--primary); }
         
+        /* CONFIGURATION URLS */
+        .url-config {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .url-config h3 { margin-bottom: 15px; color: var(--dark); }
+        .url-config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-group { margin-bottom: 10px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
+        .form-group small { color: #666; font-size: 12px; }
+        .btn { padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .btn:hover { background: var(--secondary); }
+        
         /* CAMERAS GRID */
         .cameras-grid {
             display: grid;
@@ -127,14 +144,8 @@
             gap: 10px;
         }
         
-        .camera-title i {
-            font-size: 20px;
-        }
-        
-        .camera-title h3 {
-            font-size: 16px;
-            font-weight: 500;
-        }
+        .camera-title i { font-size: 20px; }
+        .camera-title h3 { font-size: 16px; font-weight: 500; }
         
         .camera-badge {
             padding: 4px 10px;
@@ -143,14 +154,8 @@
             font-weight: 600;
             background: rgba(255,255,255,0.2);
         }
-        
-        .camera-badge.online {
-            background: var(--success);
-        }
-        
-        .camera-badge.offline {
-            background: var(--danger);
-        }
+        .camera-badge.online { background: var(--success); }
+        .camera-badge.offline { background: var(--danger); }
         
         .camera-feed {
             height: 280px;
@@ -161,16 +166,24 @@
             justify-content: center;
         }
         
+        .camera-feed img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
         .camera-placeholder {
             text-align: center;
             color: white;
             opacity: 0.7;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
         }
         
-        .camera-placeholder i {
-            font-size: 60px;
-            margin-bottom: 15px;
-        }
+        .camera-placeholder i { font-size: 60px; margin-bottom: 15px; }
         
         .camera-overlay {
             position: absolute;
@@ -194,18 +207,8 @@
             box-shadow: 0 0 10px var(--success);
             animation: pulse 2s infinite;
         }
-        
-        .camera-status-dot.offline {
-            background: var(--danger);
-            box-shadow: 0 0 10px var(--danger);
-            animation: none;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
+        .camera-status-dot.offline { background: var(--danger); box-shadow: 0 0 10px var(--danger); animation: none; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         
         .camera-controls {
             padding: 15px 20px;
@@ -222,784 +225,119 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 13px;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
-        
-        .camera-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        
-        .camera-btn.record:hover {
-            background: var(--danger);
-            border-color: var(--danger);
-        }
-        
-        /* STATS */
-        .stats-mini {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .stat-mini-card {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .stat-mini-card i {
-            font-size: 24px;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-        
-        .stat-mini-card h4 {
-            font-size: 22px;
-            color: var(--dark);
-        }
-        
-        .stat-mini-card p {
-            font-size: 13px;
-            color: #666;
-        }
-        
-        /* MODAL */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            max-width: 90%;
-            max-height: 90%;
-        }
-        
-        .modal-content img {
-            max-width: 100%;
-            max-height: 90vh;
-            border-radius: 8px;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-        }
+        .camera-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
         
         /* RESPONSIVE */
-        @media (max-width: 1200px) {
-            .cameras-grid { grid-template-columns: 1fr; }
-        }
-        /* SIDEBAR */
-.sidebar {
-    width: 280px;
-    background: linear-gradient(180deg, #1e3c72 0%, #1a1a2e 100%);
-    color: white;
-    position: fixed;
-    height: 100vh;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-    z-index: 100;
-}
-
-/* Logo */
-.logo {
-    padding: 25px 20px;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.logo h2 {
-    font-size: 22px;
-    margin-bottom: 5px;
-    background: linear-gradient(135deg, #fff, #ff6b35);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.logo p {
-    font-size: 12px;
-    opacity: 0.7;
-}
-
-/* Navigation */
-nav {
-    flex: 1;
-    padding: 20px 0;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    padding: 14px 25px;
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
-    transition: all 0.3s;
-    border-left: 4px solid transparent;
-    position: relative;
-}
-
-.nav-item i {
-    width: 28px;
-    margin-right: 15px;
-    font-size: 18px;
-    text-align: center;
-}
-
-.nav-item span {
-    font-size: 15px;
-    font-weight: 500;
-}
-
-.nav-item:hover {
-    background: rgba(255,255,255,0.08);
-    color: white;
-    padding-left: 30px;
-}
-
-.nav-item.active {
-    background: rgba(255,107,53,0.15);
-    border-left-color: #ff6b35;
-    color: white;
-}
-
-.nav-item.active i {
-    color: #ff6b35;
-}
-
-/* Badge pour les alertes */
-.nav-badge {
-    margin-left: auto;
-    background: #dc3545;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
-    min-width: 22px;
-    text-align: center;
-}
-
-/* Divider */
-.nav-divider {
-    height: 1px;
-    background: rgba(255,255,255,0.1);
-    margin: 15px 20px;
-}
-
-/* Footer sidebar */
-.sidebar-footer {
-    padding: 20px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    margin-top: auto;
-}
-
-.user-info-mini {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 10px;
-}
-
-.user-info-mini i {
-    font-size: 40px;
-    color: #ff6b35;
-}
-
-.user-info-mini div {
-    display: flex;
-    flex-direction: column;
-}
-
-.user-info-mini strong {
-    font-size: 14px;
-    color: white;
-}
-
-.user-info-mini span {
-    font-size: 11px;
-    opacity: 0.6;
-}
-
-/* Scrollbar personnalisée */
-.sidebar::-webkit-scrollbar {
-    width: 5px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.05);
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.2);
-    border-radius: 10px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,0.3);
-}
-/* ============================================ */
-/* RESPONSIVE DESIGN - ADAPTATION MOBILE/TABLETTE */
-/* ============================================ */
-
-/* Tablette (écran ≤ 1024px) */
-@media screen and (max-width: 1024px) {
-    :root {
-        --sidebar-width: 240px;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-    
-    .charts-grid,
-    .settings-grid,
-    .rapports-grid,
-    .cameras-grid {
-        grid-template-columns: 1fr !important;
-    }
-    
-    .grid-2 {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-/* Mobile (écran ≤ 768px) */
-@media screen and (max-width: 768px) {
-    :root {
-        --sidebar-width: 0px;
-    }
-    
-    /* Sidebar devient cachée par défaut sur mobile */
-    .sidebar {
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 1000;
-        width: 260px;
-    }
-    
-    .sidebar.open {
-        transform: translateX(0);
-    }
-    
-    /* Contenu principal pleine largeur */
-    .main-content {
-        margin-left: 0 !important;
-        padding: 10px !important;
-    }
-    
-    /* Bouton menu mobile */
-    .mobile-menu-btn {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        width: 45px;
-        height: 45px;
-        background: #1e3c72;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 22px;
-        cursor: pointer;
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        z-index: 1001;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    
-    /* Top bar avec espace pour le bouton menu */
-    .top-bar {
-        flex-direction: column;
-        align-items: flex-start !important;
-        gap: 10px;
-        margin-top: 50px;
-        padding: 15px !important;
-    }
-    
-    /* Stats en 1 colonne */
-    .stats-grid,
-    .stats-mini {
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
-    }
-    
-    /* Dashboard en 1 colonne */
-    .dashboard-grid,
-    .bottom-grid {
-        grid-template-columns: 1fr !important;
-        gap: 15px !important;
-    }
-    
-    /* Tableaux défilables */
-    table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    th, td {
-        min-width: 100px;
-    }
-    
-    /* Titres adaptés */
-    h1 { font-size: 20px !important; }
-    h2 { font-size: 18px !important; }
-    h3 { font-size: 16px !important; }
-    
-    /* Cartes */
-    .card, 
-    .stat-card, 
-    .setting-card, 
-    .chart-card, 
-    .rapport-card {
-        padding: 15px !important;
-    }
-    
-    /* Gros chiffres */
-    .big-number,
-    .compteur {
-        font-size: 48px !important;
-    }
-    
-    .stat-number {
-        font-size: 24px !important;
-    }
-    
-    /* Formulaires */
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-        font-size: 16px !important;
-        padding: 12px !important;
-    }
-    
-    /* Boutons plus grands pour le tactile */
-    .btn, 
-    button:not(.mobile-menu-btn):not(.nav-item) {
-        padding: 12px 20px !important;
-        font-size: 14px !important;
-        width: 100% !important;
-        margin-bottom: 8px !important;
-    }
-    
-    /* Photo module */
-    .photo-module {
-        flex-direction: column !important;
-    }
-    
-    .photo-preview {
-        width: 100% !important;
-        height: 150px !important;
-        margin-bottom: 10px;
-    }
-    
-    .photo-options {
-        width: 100% !important;
-    }
-    
-    /* Filtres en colonne */
-    .filtres-bar {
-        flex-direction: column !important;
-    }
-    
-    .filtre-group {
-        width: 100% !important;
-        min-width: 100% !important;
-    }
-    
-    /* Modal */
-    .modal-content {
-        width: 95% !important;
-        padding: 20px !important;
-        margin: 10px !important;
-    }
-    
-    /* Caméra feed */
-    .camera-feed {
-        height: 200px !important;
-    }
-    
-    /* Classes list */
-    .classes-list {
-        flex-direction: column !important;
-    }
-    
-    .classe-tag {
-        width: 100% !important;
-        justify-content: space-between !important;
-    }
-    
-    /* Niveau card */
-    .niveau-card {
-        padding: 10px !important;
-    }
-    
-    /* Masquer certains éléments sur mobile */
-    .hide-on-mobile {
-        display: none !important;
-    }
-    
-    /* Sidebar footer */
-    .sidebar-footer {
-        padding: 15px !important;
-    }
-    
-    .user-info-mini {
-        flex-direction: column !important;
-        text-align: center !important;
-    }
-    
-    /* Date/time dans top bar */
-    .datetime {
-        text-align: left !important;
-        width: 100% !important;
-    }
-    
-    .time {
-        font-size: 16px !important;
-    }
-}
-
-/* Petit mobile (écran ≤ 480px) */
-@media screen and (max-width: 480px) {
-    .main-content {
-        padding: 8px !important;
-    }
-    
-    .big-number,
-    .compteur {
-        font-size: 36px !important;
-    }
-    
-    .top-bar {
-        padding: 12px !important;
-    }
-    
-    .page-title h1 {
-        font-size: 18px !important;
-    }
-    
-    .page-title p {
-        font-size: 12px !important;
-    }
-    
-    /* Cartes */
-    .card, 
-    .stat-card {
-        padding: 12px !important;
-    }
-    
-    /* Alertes */
-    .alert-item {
-        flex-wrap: wrap !important;
-    }
-    
-    /* Caméras */
-    .camera-controls {
-        flex-direction: column !important;
-    }
-    
-    .camera-btn {
-        width: 100% !important;
-    }
-    
-    /* Pagination */
-    .pagination {
-        flex-wrap: wrap !important;
-    }
-}
+        @media (max-width: 1200px) { .cameras-grid { grid-template-columns: 1fr; } .url-config-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .main-content { margin-left: 0 !important; padding: 10px !important; } }
     </style>
 </head>
 <body>
-    <!-- BOUTON MENU MOBILE -->
-<button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;">
-    <i class="fas fa-bars"></i>
-</button>
-    <!-- SIDEBAR NAVIGATION -->
-<div class="sidebar">
-    <div class="logo">
-        <h2>🛡️ SSI INAGOHI</h2>
-        <p>Lycée Moderne - San Pedro</p>
-    </div>
-    <nav>
-        <a href="index.html" class="nav-item">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>Tableau de bord</span>
-        </a>
-        <a href="eleves.html" class="nav-item">
-            <i class="fas fa-user-graduate"></i>
-            <span>Élèves</span>
-        </a>
-        <a href="parents.html" class="nav-item">
-            <i class="fas fa-user-friends"></i>
-            <span>Parents</span>
-        </a>
-        <a href="personnel.html" class="nav-item">
-            <i class="fas fa-chalkboard-teacher"></i>
-            <span>Personnel</span>
-        </a>
-        <a href="classes.html" class="nav-item">
-            <i class="fas fa-door-open"></i>
-            <span>Classes</span>
-        </a>
-        
-        <div class="nav-divider"></div>
-        
-        <a href="alertes.html" class="nav-item">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span>Alertes</span>
-            <span class="nav-badge" id="alertes-count">0</span>
-        </a>
-        <a href="absences.html" class="nav-item">
-            <i class="fas fa-calendar-times"></i>
-            <span>Absences</span>
-        </a>
-        <a href="cameras.html" class="nav-item active">
-            <i class="fas fa-video"></i>
-            <span>Caméras</span>
-        </a>
-        
-        <div class="nav-divider"></div>
-        
-        <a href="statistiques.html" class="nav-item">
-            <i class="fas fa-chart-bar"></i>
-            <span>Statistiques</span>
-        </a>
-        <a href="rapports.html" class="nav-item">
-            <i class="fas fa-file-alt"></i>
-            <span>Rapports</span>
-        </a>
-        
-        <div class="nav-divider"></div>
-        
-        <a href="parametres.html" class="nav-item">
-            <i class="fas fa-cog"></i>
-            <span>Paramètres</span>
-        </a>
-        <a href="javascript:void(0);" class="nav-item" onclick="deconnexion()">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Déconnexion</span>
-        </a>
-    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;"><i class="fas fa-bars"></i></button>
     
-    <div class="sidebar-footer">
-        <div class="user-info-mini">
-            <i class="fas fa-user-circle"></i>
-            <div>
-                <strong>Administrateur</strong>
-                <span>admin@inagohi.ci</span>
-            </div>
-        </div>
+    <div class="sidebar">
+        <div class="logo"><h2>🛡️ SSI INAGOHI</h2><p>Lycée Moderne - San Pedro</p></div>
+        <nav>
+            <a href="index.html" class="nav-item"><i class="fas fa-tachometer-alt"></i><span>Tableau de bord</span></a>
+            <a href="eleves.html" class="nav-item"><i class="fas fa-user-graduate"></i><span>Élèves</span></a>
+            <a href="parents.html" class="nav-item"><i class="fas fa-user-friends"></i><span>Parents</span></a>
+            <a href="personnel.html" class="nav-item"><i class="fas fa-chalkboard-teacher"></i><span>Personnel</span></a>
+            <a href="classes.html" class="nav-item"><i class="fas fa-door-open"></i><span>Classes</span></a>
+            <a href="emploi_du_temps.html" class="nav-item"><i class="fas fa-calendar-alt"></i><span>Emploi du temps</span></a>
+            <div class="nav-divider"></div>
+            <a href="alertes.html" class="nav-item"><i class="fas fa-exclamation-triangle"></i><span>Alertes</span><span class="nav-badge" id="alertes-count">0</span></a>
+            <a href="absences.html" class="nav-item"><i class="fas fa-calendar-times"></i><span>Absences</span></a>
+            <a href="cameras.html" class="nav-item active"><i class="fas fa-video"></i><span>Caméras</span></a>
+            <div class="nav-divider"></div>
+            <a href="statistiques.html" class="nav-item"><i class="fas fa-chart-bar"></i><span>Statistiques</span></a>
+            <a href="rapports.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Rapports</span></a>
+            <div class="nav-divider"></div>
+            <a href="parametres.html" class="nav-item"><i class="fas fa-cog"></i><span>Paramètres</span></a>
+            <a href="javascript:void(0);" class="nav-item" onclick="deconnexion()"><i class="fas fa-sign-out-alt"></i><span>Déconnexion</span></a>
+        </nav>
+        <div class="sidebar-footer"><div class="user-info-mini"><i class="fas fa-user-circle"></i><div><strong>Administrateur</strong><span>admin@inagohi.ci</span></div></div></div>
     </div>
-</div>
-    <!-- MAIN CONTENT -->
+    
     <div class="main-content">
         <div class="top-bar">
-            <div class="page-title">
-                <h1>Gestion des caméras</h1>
-                <p>Surveillance en temps réel</p>
+            <div class="page-title"><h1>Gestion des caméras</h1><p>Surveillance en temps réel</p></div>
+            <div class="datetime"><div class="date" id="current-date"></div><div class="time" id="current-time"></div></div>
+        </div>
+        
+        <!-- CONFIGURATION DES URLS -->
+        <div class="url-config">
+            <h3><i class="fas fa-cog"></i> Configuration des flux vidéo</h3>
+            <div class="url-config-grid">
+                <div class="form-group">
+                    <label><i class="fas fa-door-open"></i> URL Caméra Portail</label>
+                    <input type="text" id="url-portail" placeholder="http://192.168.1.100:8080/video_feed_entree" value="http://localhost:8080/video_feed_entree">
+                    <small>Flux de la caméra d'entrée (reconnaissance faciale, objets dangereux)</small>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-chalkboard"></i> URL Caméra Classe</label>
+                    <input type="text" id="url-classe" placeholder="http://192.168.1.101:8081/video_feed_classe" value="http://localhost:8081/video_feed_classe">
+                    <small>Flux de la caméra de classe (absences, téléphones)</small>
+                </div>
             </div>
-            <div class="datetime">
-                <div class="date" id="current-date"></div>
-                <div class="time" id="current-time"></div>
-            </div>
+            <button class="btn" onclick="mettreAJourFlux()" style="margin-top:15px;"><i class="fas fa-sync-alt"></i> Appliquer les URLs</button>
+            <button class="btn" onclick="testerConnexions()" style="margin-top:15px; margin-left:10px; background:#6c757d;"><i class="fas fa-plug"></i> Tester connexions</button>
         </div>
         
         <!-- CAMERAS GRID -->
         <div class="cameras-grid">
-            <!-- Caméra 1 - Portail -->
+            <!-- Caméra Portail -->
             <div class="camera-card">
                 <div class="camera-header">
-                    <div class="camera-title">
-                        <i class="fas fa-door-open"></i>
-                        <h3>Portail Principal</h3>
-                    </div>
-                    <span class="camera-badge online" id="cam1-status">
-                        <i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i> EN LIGNE
-                    </span>
+                    <div class="camera-title"><i class="fas fa-door-open"></i><h3>🚪 Portail Principal</h3></div>
+                    <span class="camera-badge" id="status-portail"><i class="fas fa-circle" style="font-size:8px;margin-right:5px;"></i> EN ATTENTE</span>
                 </div>
-                <div class="camera-feed" id="cam1-feed">
-                    <div class="camera-placeholder">
-                        <i class="fas fa-camera"></i>
-                        <p>Raspberry Pi - Portail</p>
-                        <p style="font-size: 12px; margin-top: 10px;">En attente de connexion...</p>
-                    </div>
-                    <div class="camera-overlay">
-                        <i class="fas fa-map-marker-alt"></i> Entrée principale
-                    </div>
-                    <div class="camera-status-dot" id="cam1-dot"></div>
+                <div class="camera-feed">
+                    <div id="placeholder-portail" class="camera-placeholder"><i class="fas fa-video-slash"></i><p>Flux non connecté</p></div>
+                    <img id="flux-portail" src="" style="display:none;" onload="this.style.display='block'; document.getElementById('placeholder-portail').style.display='none';" onerror="this.style.display='none'; document.getElementById('placeholder-portail').style.display='block';">
+                    <div class="camera-overlay"><i class="fas fa-map-marker-alt"></i> Entrée principale</div>
+                    <div class="camera-status-dot" id="dot-portail"></div>
                 </div>
                 <div class="camera-controls">
-                    <button class="camera-btn" onclick="captureImage(1)">
-                        <i class="fas fa-camera"></i> Capture
-                    </button>
-                    <button class="camera-btn record" onclick="toggleRecord(1)">
-                        <i class="fas fa-circle" style="color: var(--danger);"></i> Enregistrer
-                    </button>
-                    <button class="camera-btn" onclick="viewFullscreen(1)">
-                        <i class="fas fa-expand"></i> Plein écran
-                    </button>
+                    <button class="camera-btn" onclick="viewFullscreen('portail')"><i class="fas fa-expand"></i> Plein écran</button>
+                    <button class="camera-btn" onclick="capturerVue('portail')"><i class="fas fa-camera"></i> Capture</button>
                 </div>
             </div>
             
-            <!-- Caméra 2 - Cour -->
+            <!-- Caméra Classe -->
             <div class="camera-card">
                 <div class="camera-header">
-                    <div class="camera-title">
-                        <i class="fas fa-tree"></i>
-                        <h3>Cour de récréation</h3>
-                    </div>
-                    <span class="camera-badge online" id="cam2-status">
-                        <i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i> EN LIGNE
-                    </span>
+                    <div class="camera-title"><i class="fas fa-chalkboard"></i><h3>📚 Salle de Classe</h3></div>
+                    <span class="camera-badge" id="status-classe"><i class="fas fa-circle" style="font-size:8px;margin-right:5px;"></i> EN ATTENTE</span>
                 </div>
-                <div class="camera-feed" id="cam2-feed">
-                    <div class="camera-placeholder">
-                        <i class="fas fa-camera"></i>
-                        <p>Raspberry Pi - Cour</p>
-                        <p style="font-size: 12px; margin-top: 10px;">En attente de connexion...</p>
-                    </div>
-                    <div class="camera-overlay">
-                        <i class="fas fa-map-marker-alt"></i> Cour centrale
-                    </div>
-                    <div class="camera-status-dot" id="cam2-dot"></div>
+                <div class="camera-feed">
+                    <div id="placeholder-classe" class="camera-placeholder"><i class="fas fa-video-slash"></i><p>Flux non connecté</p></div>
+                    <img id="flux-classe" src="" style="display:none;" onload="this.style.display='block'; document.getElementById('placeholder-classe').style.display='none';" onerror="this.style.display='none'; document.getElementById('placeholder-classe').style.display='block';">
+                    <div class="camera-overlay"><i class="fas fa-map-marker-alt"></i> Salle de classe</div>
+                    <div class="camera-status-dot" id="dot-classe"></div>
                 </div>
                 <div class="camera-controls">
-                    <button class="camera-btn" onclick="captureImage(2)">
-                        <i class="fas fa-camera"></i> Capture
-                    </button>
-                    <button class="camera-btn record" onclick="toggleRecord(2)">
-                        <i class="fas fa-circle" style="color: var(--danger);"></i> Enregistrer
-                    </button>
-                    <button class="camera-btn" onclick="viewFullscreen(2)">
-                        <i class="fas fa-expand"></i> Plein écran
-                    </button>
+                    <button class="camera-btn" onclick="viewFullscreen('classe')"><i class="fas fa-expand"></i> Plein écran</button>
+                    <button class="camera-btn" onclick="capturerVue('classe')"><i class="fas fa-camera"></i> Capture</button>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Caméra 3 - Salle de classe (optionnelle) -->
-        <div class="cameras-grid" style="grid-template-columns: 1fr;">
-            <div class="camera-card">
-                <div class="camera-header">
-                    <div class="camera-title">
-                        <i class="fas fa-chalkboard"></i>
-                        <h3>Salle de classe - 4ème A</h3>
-                    </div>
-                    <span class="camera-badge offline" id="cam3-status">
-                        <i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i> HORS LIGNE
-                    </span>
-                </div>
-                <div class="camera-feed" id="cam3-feed" style="height: 250px;">
-                    <div class="camera-placeholder">
-                        <i class="fas fa-video-slash"></i>
-                        <p>Caméra non connectée</p>
-                        <p style="font-size: 12px; margin-top: 10px;">Branchez une caméra pour activer</p>
-                    </div>
-                    <div class="camera-overlay">
-                        <i class="fas fa-map-marker-alt"></i> Bâtiment B - Salle 12
-                    </div>
-                    <div class="camera-status-dot offline"></div>
-                </div>
-                <div class="camera-controls">
-                    <button class="camera-btn" disabled style="opacity: 0.5;">
-                        <i class="fas fa-camera"></i> Capture
-                    </button>
-                    <button class="camera-btn record" disabled style="opacity: 0.5;">
-                        <i class="fas fa-circle"></i> Enregistrer
-                    </button>
-                    <button class="camera-btn" disabled style="opacity: 0.5;">
-                        <i class="fas fa-expand"></i> Plein écran
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- STATS -->
-        <div class="stats-mini">
-            <div class="stat-mini-card">
-                <i class="fas fa-hard-drive"></i>
-                <h4>128 Go</h4>
-                <p>Stockage disponible</p>
-            </div>
-            <div class="stat-mini-card">
-                <i class="fas fa-clock"></i>
-                <h4>24/7</h4>
-                <p>Enregistrement continu</p>
-            </div>
-            <div class="stat-mini-card">
-                <i class="fas fa-shield-alt"></i>
-                <h4>AES-256</h4>
-                <p>Flux chiffré</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- MODAL PLEIN ÉCRAN -->
-    <div class="modal" id="fullscreenModal">
-        <span class="modal-close" onclick="closeFullscreen()">&times;</span>
-        <div class="modal-content" id="modalContent">
-            <div class="camera-placeholder" style="color: white;">
-                <i class="fas fa-camera" style="font-size: 80px;"></i>
-                <p style="margin-top: 20px;">Chargement du flux...</p>
             </div>
         </div>
     </div>
     
     <script>
-        // ✅ URL DE L'API
         const API_URL = 'https://systeme-de-securite-intelligente.onrender.com/api';
         
         // Vérification d'accès
-(function() {
-    const currentPage = window.location.pathname.split('/').pop();
-    
-    if (currentPage === 'login.html' || currentPage === 'reset.html') {
-        return;
-    }
-    
-    const role = sessionStorage.getItem('ssi_role');
-    const pagesAutorisees = JSON.parse(sessionStorage.getItem('ssi_pages') || '[]');
-    
-    if (sessionStorage.getItem('ssi_logged_in') !== 'true') {
-        window.location.href = 'login.html';
-        return;
-    }
-    
-    if (!pagesAutorisees.includes(currentPage)) {
-        alert('⛔ Accès refusé. Vous n\'avez pas les droits pour accéder à cette page.');
-        window.location.href = role === 'admin' ? 'index.html' : 'eleves.html';
-    }
-})();
-
-        // Mise à jour de la date/heure
+        (function() {
+            const currentPage = window.location.pathname.split('/').pop();
+            if (currentPage === 'login.html' || currentPage === 'reset.html') return;
+            if (sessionStorage.getItem('ssi_logged_in') !== 'true') { window.location.href = 'login.html'; return; }
+        })();
+        
         function updateDateTime() {
             const now = new Date();
             document.getElementById('current-date').textContent = now.toLocaleDateString('fr-FR', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
@@ -1007,147 +345,96 @@ nav {
         }
         setInterval(updateDateTime, 1000); updateDateTime();
         
-        // Simuler la vérification du statut des caméras
-        async function checkCamerasStatus() {
+        // Charger les URLs sauvegardées
+        function chargerURLs() {
+            const urlPortail = localStorage.getItem('cam_url_portail') || 'http://localhost:8080/video_feed_entree';
+            const urlClasse = localStorage.getItem('cam_url_classe') || 'http://localhost:8081/video_feed_classe';
+            document.getElementById('url-portail').value = urlPortail;
+            document.getElementById('url-classe').value = urlClasse;
+            appliquerFlux();
+        }
+        
+        function mettreAJourFlux() {
+            const urlPortail = document.getElementById('url-portail').value;
+            const urlClasse = document.getElementById('url-classe').value;
+            localStorage.setItem('cam_url_portail', urlPortail);
+            localStorage.setItem('cam_url_classe', urlClasse);
+            appliquerFlux();
+            testerConnexions();
+            alert('✅ URLs mises à jour !');
+        }
+        
+        function appliquerFlux() {
+            const urlPortail = localStorage.getItem('cam_url_portail') || 'http://localhost:8080/video_feed_entree';
+            const urlClasse = localStorage.getItem('cam_url_classe') || 'http://localhost:8081/video_feed_classe';
+            
+            document.getElementById('flux-portail').src = urlPortail;
+            document.getElementById('flux-classe').src = urlClasse;
+        }
+        
+        async function testerConnexions() {
+            await verifierConnexion('portail');
+            await verifierConnexion('classe');
+        }
+        
+        async function verifierConnexion(type) {
+            const url = type === 'portail' ? 
+                localStorage.getItem('cam_url_portail') : 
+                localStorage.getItem('cam_url_classe');
+            const statusEl = document.getElementById(`status-${type}`);
+            const dotEl = document.getElementById(`dot-${type}`);
+            
+            if (!url) {
+                statusEl.innerHTML = '<i class="fas fa-circle" style="font-size:8px;margin-right:5px;"></i> NON CONFIGURÉ';
+                statusEl.className = 'camera-badge offline';
+                dotEl.className = 'camera-status-dot offline';
+                return;
+            }
+            
+            statusEl.innerHTML = '<i class="fas fa-circle" style="font-size:8px;margin-right:5px;"></i> TEST...';
+            statusEl.className = 'camera-badge';
+            
             try {
-                const response = await fetch(API_URL + '/status');
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                const response = await fetch(url, { method: 'HEAD', signal: controller.signal });
+                clearTimeout(timeoutId);
                 
                 if (response.ok) {
-                    document.getElementById('cam1-status').className = 'camera-badge online';
-                    document.getElementById('cam1-status').innerHTML = '<i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i> EN LIGNE';
-                    document.getElementById('cam1-dot').className = 'camera-status-dot';
-                    
-                    document.getElementById('cam2-status').className = 'camera-badge online';
-                    document.getElementById('cam2-status').innerHTML = '<i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i> EN LIGNE';
-                    document.getElementById('cam2-dot').className = 'camera-status-dot';
+                    statusEl.innerHTML = '<i class="fas fa-circle" style="font-size:8px;margin-right:5px;"></i> EN LIGNE';
+                    statusEl.className = 'camera-badge online';
+                    dotEl.className = 'camera-status-dot';
+                } else {
+                    throw new Error('Offline');
                 }
-            } catch (error) {
-                document.getElementById('cam1-status').className = 'camera-badge offline';
-                document.getElementById('cam1-status').innerHTML = '<i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i> HORS LIGNE';
-                document.getElementById('cam1-dot').className = 'camera-status-dot offline';
-                
-                document.getElementById('cam2-status').className = 'camera-badge offline';
-                document.getElementById('cam2-status').innerHTML = '<i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i> HORS LIGNE';
-                document.getElementById('cam2-dot').className = 'camera-status-dot offline';
+            } catch(e) {
+                statusEl.innerHTML = '<i class="fas fa-circle" style="font-size:8px;margin-right:5px;"></i> HORS LIGNE';
+                statusEl.className = 'camera-badge offline';
+                dotEl.className = 'camera-status-dot offline';
             }
         }
         
-        function captureImage(camId) {
-            alert(`📸 Capture d'écran de la caméra ${camId} enregistrée !`);
+        function viewFullscreen(type) {
+            const url = type === 'portail' ? 
+                localStorage.getItem('cam_url_portail') : 
+                localStorage.getItem('cam_url_classe');
+            if (url) window.open(url, '_blank');
         }
         
-        let recording = { 1: false, 2: false, 3: false };
-        
-        function toggleRecord(camId) {
-            recording[camId] = !recording[camId];
-            const btn = event.target;
-            if (recording[camId]) {
-                btn.innerHTML = '<i class="fas fa-stop"></i> Stop';
-                btn.style.background = 'var(--danger)';
-                btn.style.color = 'white';
-                alert(`🔴 Enregistrement démarré sur la caméra ${camId}`);
-            } else {
-                btn.innerHTML = '<i class="fas fa-circle" style="color: var(--danger);"></i> Enregistrer';
-                btn.style.background = 'white';
-                btn.style.color = 'black';
-                alert(`⏹️ Enregistrement arrêté sur la caméra ${camId}`);
-            }
+        function capturerVue(type) {
+            alert(`📸 Capture d'écran de la caméra ${type} enregistrée !`);
         }
         
-        function viewFullscreen(camId) {
-            const modal = document.getElementById('fullscreenModal');
-            const content = document.getElementById('modalContent');
-            
-            let camName = camId === 1 ? 'Portail Principal' : (camId === 2 ? 'Cour de récréation' : `Caméra ${camId}`);
-            
-            content.innerHTML = `
-                <div class="camera-placeholder" style="color: white;">
-                    <i class="fas fa-camera" style="font-size: 80px;"></i>
-                    <p style="margin-top: 20px; font-size: 18px;">${camName}</p>
-                    <p style="font-size: 14px; margin-top: 10px;">Flux vidéo en direct</p>
-                    <p style="font-size: 12px; margin-top: 20px; opacity: 0.7;">[Simulation - En attente de connexion Raspberry Pi]</p>
-                </div>
-            `;
-            
-            modal.style.display = 'flex';
+        function deconnexion() { 
+            if (confirm('Déconnexion ?')) { 
+                sessionStorage.clear(); 
+                window.location.href = 'login.html'; 
+            } 
         }
         
-        function closeFullscreen() {
-            document.getElementById('fullscreenModal').style.display = 'none';
-        }
-        
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeFullscreen(); });
-        
-        function updateAlertesCount() {
-            fetch(API_URL + '/alertes')
-                .then(r => r.json())
-                .then(alertes => {
-                    const nonTraitees = alertes.filter(a => a.statut === 'non_traite').length;
-                    const badge = document.getElementById('alertes-count');
-                    if (badge) {
-                        badge.textContent = nonTraitees;
-                        badge.style.display = nonTraitees > 0 ? 'inline-block' : 'none';
-                    }
-                })
-                .catch(e => console.error('Erreur compteur alertes'));
-        }
-        
-        function deconnexion() {
-            if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
-                sessionStorage.clear();
-                window.location.href = 'login.html';
-            }
-        }
-        
-        function setActiveNav() {
-            document.querySelectorAll('.nav-item').forEach(item => {
-                if (item.getAttribute('href') === 'cameras.html') item.classList.add('active');
-            });
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            setActiveNav();
-            checkCamerasStatus();
-            updateAlertesCount();
-            setInterval(checkCamerasStatus, 10000);
-            setInterval(updateAlertesCount, 30000);
-        });
-        
-        // TOGGLE MENU MOBILE
-        function toggleMobileMenu() {
-            const sidebar = document.querySelector('.sidebar');
-            const icon = document.querySelector('.mobile-menu-btn i');
-            sidebar.classList.toggle('open');
-            if (sidebar.classList.contains('open')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        }
-
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            if (window.innerWidth <= 768) {
-                if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && sidebar.classList.contains('open')) {
-                    sidebar.classList.remove('open');
-                    document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
-                    document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
-                }
-            }
-        });
-
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    document.querySelector('.sidebar').classList.remove('open');
-                    document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
-                    document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
-                }
-            });
-        });
+        // Initialisation
+        chargerURLs();
+        setInterval(testerConnexions, 30000);
     </script>
 </body>
-</html>
+</html>s

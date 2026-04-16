@@ -147,7 +147,7 @@
         /* STATS */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 20px;
             margin-bottom: 25px;
         }
@@ -165,6 +165,7 @@
         .stat-card.intrusion .stat-number { color: var(--danger); }
         .stat-card.objet .stat-number { color: #fd7e14; }
         .stat-card.bagarre .stat-number { color: #6f42c1; }
+        .stat-card.absence .stat-number { color: #17a2b8; }
         
         /* FILTRES */
         .filtres-bar {
@@ -178,7 +179,7 @@
             align-items: flex-end;
         }
         
-        .filtre-group { flex: 1; min-width: 180px; }
+        .filtre-group { flex: 1; min-width: 160px; }
         .filtre-group label { display: block; font-size: 13px; color: #666; margin-bottom: 5px; }
         .filtre-group select, .filtre-group input {
             width: 100%;
@@ -231,6 +232,7 @@
         .badge-intrusion { background: var(--danger); color: white; }
         .badge-objet { background: #fd7e14; color: white; }
         .badge-bagarre { background: #6f42c1; color: white; }
+        .badge-absence { background: #17a2b8; color: white; }
         .badge-traite { background: var(--success); color: white; }
         .badge-non-traite { background: var(--warning); color: var(--dark); }
         
@@ -267,84 +269,38 @@
             overflow-y: auto;
         }
         
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
+        .modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
         .close-modal { font-size: 24px; cursor: pointer; }
         .detail-info { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0; }
         
-        /* BOUTON RETOUR HAUT */
-        #back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            z-index: 9999;
-            border: 2px solid white;
-        }
-        #back-to-top.show { display: flex; }
-        #back-to-top:hover { background: var(--accent); transform: translateY(-5px); }
-
         /* RESPONSIVE */
         @media screen and (max-width: 1024px) {
-            :root { --sidebar-width: 240px; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .stats-grid { grid-template-columns: repeat(3, 1fr) !important; }
         }
         @media screen and (max-width: 768px) {
-            :root { --sidebar-width: 0px; }
-            .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; z-index: 1000; width: 260px; }
-            .sidebar.open { transform: translateX(0); }
             .main-content { margin-left: 0 !important; padding: 10px !important; }
-            .mobile-menu-btn { display: flex !important; align-items: center; justify-content: center; width: 45px; height: 45px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 22px; cursor: pointer; position: fixed; top: 10px; left: 10px; z-index: 1001; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-            .top-bar { flex-direction: column; align-items: flex-start !important; gap: 10px; margin-top: 50px; padding: 15px !important; }
-            .stats-grid { grid-template-columns: 1fr !important; }
-            table { display: block; overflow-x: auto; white-space: nowrap; }
-            h1 { font-size: 20px !important; }
-            .filtres-bar { flex-direction: column !important; }
-            .filtre-group { width: 100% !important; }
-            .modal-content { width: 95% !important; padding: 20px !important; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .filtres-bar { flex-direction: column; }
+            .filtre-group { width: 100%; }
+            table { display: block; overflow-x: auto; }
         }
         @media screen and (max-width: 480px) {
-            .main-content { padding: 8px !important; }
-            .top-bar { padding: 12px !important; }
-            .page-title h1 { font-size: 18px !important; }
+            .stats-grid { grid-template-columns: 1fr !important; }
         }
     </style>
 </head>
 <body>
-    <!-- BOUTON MENU MOBILE -->
-    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- SIDEBAR -->
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display: none;"><i class="fas fa-bars"></i></button>
+    
     <div class="sidebar">
-        <div class="logo">
-            <h2>🛡️ SSI INAGOHI</h2>
-            <p>Lycée Moderne - San Pedro</p>
-        </div>
+        <div class="logo"><h2>🛡️ SSI INAGOHI</h2><p>Lycée Moderne - San Pedro</p></div>
         <nav>
             <a href="index.html" class="nav-item"><i class="fas fa-tachometer-alt"></i><span>Tableau de bord</span></a>
             <a href="eleves.html" class="nav-item"><i class="fas fa-user-graduate"></i><span>Élèves</span></a>
             <a href="parents.html" class="nav-item"><i class="fas fa-user-friends"></i><span>Parents</span></a>
             <a href="personnel.html" class="nav-item"><i class="fas fa-chalkboard-teacher"></i><span>Personnel</span></a>
             <a href="classes.html" class="nav-item"><i class="fas fa-door-open"></i><span>Classes</span></a>
+            <a href="emploi_du_temps.html" class="nav-item"><i class="fas fa-calendar-alt"></i><span>Emploi du temps</span></a>
             <div class="nav-divider"></div>
             <a href="alertes.html" class="nav-item active"><i class="fas fa-exclamation-triangle"></i><span>Alertes</span><span class="nav-badge" id="alertes-count">0</span></a>
             <a href="absences.html" class="nav-item"><i class="fas fa-calendar-times"></i><span>Absences</span></a>
@@ -356,18 +312,12 @@
             <a href="parametres.html" class="nav-item"><i class="fas fa-cog"></i><span>Paramètres</span></a>
             <a href="javascript:void(0);" class="nav-item" onclick="deconnexion()"><i class="fas fa-sign-out-alt"></i><span>Déconnexion</span></a>
         </nav>
-        <div class="sidebar-footer">
-            <div class="user-info-mini">
-                <i class="fas fa-user-circle"></i>
-                <div><strong>Administrateur</strong><span>admin@inagohi.ci</span></div>
-            </div>
-        </div>
+        <div class="sidebar-footer"><div class="user-info-mini"><i class="fas fa-user-circle"></i><div><strong>Administrateur</strong><span>admin@inagohi.ci</span></div></div></div>
     </div>
     
-    <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="top-bar">
-            <div class="page-title"><h1>Gestion des alertes</h1><p>Surveillance et sécurité</p></div>
+            <div class="page-title"><h1>Gestion des alertes</h1><p>Surveillance et sécurité par zone</p></div>
             <div class="datetime"><div class="date" id="current-date"></div><div class="time" id="current-time"></div></div>
         </div>
         
@@ -376,14 +326,49 @@
             <div class="stat-card intrusion"><div class="stat-number" id="total-intrusions">0</div><div class="stat-label"><i class="fas fa-user-secret"></i> Intrusions</div></div>
             <div class="stat-card objet"><div class="stat-number" id="total-objets">0</div><div class="stat-label"><i class="fas fa-knife"></i> Objets dangereux</div></div>
             <div class="stat-card bagarre"><div class="stat-number" id="total-bagarres">0</div><div class="stat-label"><i class="fas fa-fist-raised"></i> Bagarres</div></div>
+            <div class="stat-card absence"><div class="stat-number" id="total-absences">0</div><div class="stat-label"><i class="fas fa-user-clock"></i> Absences non just.</div></div>
             <div class="stat-card"><div class="stat-number" id="total-non-traites">0</div><div class="stat-label"><i class="fas fa-clock"></i> Non traitées</div></div>
         </div>
         
         <!-- FILTRES -->
         <div class="filtres-bar">
-            <div class="filtre-group"><label>Type</label><select id="filtre-type"><option value="">Tous</option><option value="intrusion">Intrusion</option><option value="objet_dangereux">Objet dangereux</option><option value="bagarre">Bagarre</option></select></div>
-            <div class="filtre-group"><label>Statut</label><select id="filtre-statut"><option value="">Tous</option><option value="non_traite">Non traité</option><option value="traite">Traité</option></select></div>
-            <div class="filtre-group"><label>Date</label><input type="date" id="filtre-date"></div>
+            <div class="filtre-group">
+                <label><i class="fas fa-tag"></i> Type</label>
+                <select id="filtre-type">
+                    <option value="">Tous</option>
+                    <option value="intrusion">🚨 Intrusion</option>
+                    <option value="objet_dangereux">⚠️ Objet dangereux</option>
+                    <option value="bagarre">👊 Bagarre</option>
+                    <option value="absence_non_justifiee">📋 Absence non justifiée</option>
+                </select>
+            </div>
+            <div class="filtre-group">
+                <label><i class="fas fa-map-marker-alt"></i> Lieu / Zone</label>
+                <select id="filtre-lieu">
+                    <option value="">Tous</option>
+                    <option value="Portail principal">🚪 Portail principal</option>
+                    <option value="Salle de classe">📚 Salle de classe</option>
+                    <option value="Cour de récréation">🌳 Cour de récréation</option>
+                </select>
+            </div>
+            <div class="filtre-group">
+                <label><i class="fas fa-users"></i> Classe</label>
+                <select id="filtre-classe-alerte">
+                    <option value="">Toutes</option>
+                </select>
+            </div>
+            <div class="filtre-group">
+                <label><i class="fas fa-check-circle"></i> Statut</label>
+                <select id="filtre-statut">
+                    <option value="">Tous</option>
+                    <option value="non_traite">⏳ Non traité</option>
+                    <option value="traite">✅ Traité</option>
+                </select>
+            </div>
+            <div class="filtre-group">
+                <label><i class="fas fa-calendar"></i> Date</label>
+                <input type="date" id="filtre-date">
+            </div>
             <button class="btn" onclick="filtrerAlertes()"><i class="fas fa-search"></i> Filtrer</button>
             <button class="btn" onclick="resetFiltres()" style="background:#6c757d;"><i class="fas fa-undo"></i> Réinitialiser</button>
         </div>
@@ -392,13 +377,12 @@
         <div class="card">
             <div class="card-header"><h3><i class="fas fa-list"></i> Historique des alertes</h3><span id="nb-resultats">0 résultat(s)</span></div>
             <table>
-                <thead><tr><th>Date/Heure</th><th>Type</th><th>Lieu</th><th>Détails</th><th>Statut</th><th>Action</th></tr></thead>
-                <tbody id="liste-alertes"><tr><td colspan="6" style="text-align:center;">Chargement...</td></tr></tbody>
+                <thead><tr><th>Date/Heure</th><th>Type</th><th>Lieu</th><th>Classe</th><th>Détails</th><th>Statut</th><th>Action</th></tr></thead>
+                <tbody id="liste-alertes"><tr><td colspan="7" style="text-align:center;">Chargement...</td></tr></tbody>
             </table>
         </div>
     </div>
     
-    <!-- MODAL -->
     <div class="modal" id="modal-detail">
         <div class="modal-content">
             <div class="modal-header"><h3 id="modal-titre">Détail de l'alerte</h3><span class="close-modal" onclick="fermerModal()">&times;</span></div>
@@ -406,33 +390,18 @@
         </div>
     </div>
     
-    <!-- BOUTON RETOUR HAUT -->
     <button id="back-to-top" title="Retour en haut"><i class="fas fa-arrow-up"></i></button>
     
     <script>
-        // ✅ URL DE L'API
         const API_URL = 'https://systeme-de-securite-intelligente.onrender.com/api';
+        let toutesLesAlertes = [];
         
         // Vérification d'accès
         (function() {
             const currentPage = window.location.pathname.split('/').pop();
             if (currentPage === 'login.html' || currentPage === 'reset.html') return;
-            
-            const role = sessionStorage.getItem('ssi_role');
-            const pagesAutorisees = JSON.parse(sessionStorage.getItem('ssi_pages') || '[]');
-            
-            if (sessionStorage.getItem('ssi_logged_in') !== 'true') {
-                window.location.href = 'login.html';
-                return;
-            }
-            
-            if (!pagesAutorisees.includes(currentPage)) {
-                alert('⛔ Accès refusé. Vous n\'avez pas les droits pour accéder à cette page.');
-                window.location.href = role === 'admin' ? 'index.html' : 'eleves.html';
-            }
+            if (sessionStorage.getItem('ssi_logged_in') !== 'true') { window.location.href = 'login.html'; return; }
         })();
-
-        let toutesLesAlertes = [];
         
         function updateDateTime() {
             const now = new Date();
@@ -444,9 +413,17 @@
         }
         setInterval(updateDateTime, 1000); updateDateTime();
         
-        // ============================================
-        // CHARGER LES ALERTES DEPUIS L'API
-        // ============================================
+        // Charger les classes pour le filtre
+        async function chargerClassesFiltre() {
+            try {
+                const r = await fetch(API_URL + '/classes');
+                const classes = await r.json();
+                const select = document.getElementById('filtre-classe-alerte');
+                select.innerHTML = '<option value="">Toutes</option>' + 
+                    classes.map(c => `<option value="${c.nom}">${c.nom}</option>`).join('');
+            } catch(e) { console.error(e); }
+        }
+        
         async function chargerAlertes() {
             try {
                 const response = await fetch(API_URL + '/alertes');
@@ -468,18 +445,33 @@
             const tbody = document.getElementById('liste-alertes');
             document.getElementById('nb-resultats').textContent = `${alertes.length} résultat(s)`;
             if (alertes.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px;">✅ Aucune alerte</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:40px;">✅ Aucune alerte</td></tr>';
                 return;
             }
             tbody.innerHTML = alertes.map(a => {
-                let badgeType = a.type === 'intrusion' ? 'badge-intrusion' : (a.type === 'objet_dangereux' ? 'badge-objet' : 'badge-bagarre');
-                let texteType = a.type === 'intrusion' ? '🚨 INTRUSION' : (a.type === 'objet_dangereux' ? '⚠️ OBJET' : '👊 BAGARRE');
+                let badgeType = 'badge-intrusion';
+                let texteType = '🚨 INTRUSION';
+                if (a.type === 'objet_dangereux') { badgeType = 'badge-objet'; texteType = '⚠️ OBJET'; }
+                else if (a.type === 'bagarre') { badgeType = 'badge-bagarre'; texteType = '👊 BAGARRE'; }
+                else if (a.type === 'absence_non_justifiee') { badgeType = 'badge-absence'; texteType = '📋 ABSENCE'; }
+                
                 let badgeStatut = a.statut === 'traite' ? 'badge-traite' : 'badge-non-traite';
+                
+                // Extraire la classe des détails si disponible
+                let classe = '-';
+                if (a.details) {
+                    try {
+                        const details = JSON.parse(a.details);
+                        if (details.classe) classe = details.classe;
+                    } catch(e) {}
+                }
+                
                 return `<tr onclick="voirDetail(${a.id})">
                     <td>${a.date} ${a.heure}</td>
                     <td><span class="badge ${badgeType}">${texteType}</span></td>
                     <td>${a.lieu || '-'}</td>
-                    <td>${a.details || '-'}</td>
+                    <td>${classe}</td>
+                    <td>${a.details ? (a.details.length > 30 ? a.details.substring(0,30)+'...' : a.details) : '-'}</td>
                     <td><span class="badge ${badgeStatut}">${a.statut === 'traite' ? '✅ Traité' : '⏳ Non traité'}</span></td>
                     <td onclick="event.stopPropagation()"><button class="action-btn" onclick="marquerTraite(${a.id})" ${a.statut === 'traite' ? 'disabled' : ''}>✅ Traiter</button></td>
                 </tr>`;
@@ -490,21 +482,39 @@
             document.getElementById('total-intrusions').textContent = toutesLesAlertes.filter(a => a.type === 'intrusion').length;
             document.getElementById('total-objets').textContent = toutesLesAlertes.filter(a => a.type === 'objet_dangereux').length;
             document.getElementById('total-bagarres').textContent = toutesLesAlertes.filter(a => a.type === 'bagarre').length;
+            document.getElementById('total-absences').textContent = toutesLesAlertes.filter(a => a.type === 'absence_non_justifiee').length;
             document.getElementById('total-non-traites').textContent = toutesLesAlertes.filter(a => a.statut === 'non_traite').length;
         }
         
         function filtrerAlertes() {
             const type = document.getElementById('filtre-type').value;
+            const lieu = document.getElementById('filtre-lieu').value;
+            const classe = document.getElementById('filtre-classe-alerte').value;
             const statut = document.getElementById('filtre-statut').value;
             const date = document.getElementById('filtre-date').value;
-            const filtrees = toutesLesAlertes.filter(a => 
-                (!type || a.type === type) && (!statut || a.statut === statut) && (!date || a.date === date)
-            );
+            
+            const filtrees = toutesLesAlertes.filter(a => {
+                if (type && a.type !== type) return false;
+                if (lieu && a.lieu !== lieu) return false;
+                if (statut && a.statut !== statut) return false;
+                if (date && a.date !== date) return false;
+                
+                // Filtre par classe
+                if (classe) {
+                    try {
+                        const details = JSON.parse(a.details || '{}');
+                        if (details.classe !== classe) return false;
+                    } catch(e) { return false; }
+                }
+                return true;
+            });
             afficherAlertes(filtrees);
         }
         
         function resetFiltres() {
             document.getElementById('filtre-type').value = '';
+            document.getElementById('filtre-lieu').value = '';
+            document.getElementById('filtre-classe-alerte').value = '';
             document.getElementById('filtre-statut').value = '';
             document.getElementById('filtre-date').value = new Date().toISOString().split('T')[0];
             afficherAlertes(toutesLesAlertes);
@@ -513,7 +523,11 @@
         function voirDetail(id) {
             const a = toutesLesAlertes.find(x => x.id === id);
             if (!a) return;
-            let badge = a.type === 'intrusion' ? 'badge-intrusion' : (a.type === 'objet_dangereux' ? 'badge-objet' : 'badge-bagarre');
+            let badge = 'badge-intrusion';
+            if (a.type === 'objet_dangereux') badge = 'badge-objet';
+            else if (a.type === 'bagarre') badge = 'badge-bagarre';
+            else if (a.type === 'absence_non_justifiee') badge = 'badge-absence';
+            
             document.getElementById('modal-titre').textContent = `Alerte #${a.id}`;
             document.getElementById('modal-body').innerHTML = `
                 <span class="badge ${badge}" style="margin-bottom:15px; display:inline-block;">${a.type}</span>
@@ -536,9 +550,7 @@
         
         async function marquerTraite(id) {
             try {
-                const response = await fetch(API_URL + '/alertes/' + id + '/traiter', {
-                    method: 'PUT'
-                });
+                const response = await fetch(API_URL + '/alertes/' + id + '/traiter', { method: 'PUT' });
                 if (response.ok) {
                     const alerte = toutesLesAlertes.find(a => a.id === id);
                     if (alerte) alerte.statut = 'traite';
@@ -550,10 +562,10 @@
         }
         
         function deconnexion() { 
-            if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
-                sessionStorage.clear();
-                window.location.href = 'login.html';
-            }
+            if (confirm('Déconnexion ?')) { 
+                sessionStorage.clear(); 
+                window.location.href = 'login.html'; 
+            } 
         }
         
         function updateAlertesCount() {
@@ -576,43 +588,14 @@
             document.querySelectorAll('.nav-item').forEach(item => {
                 if (item.getAttribute('href') === 'alertes.html') item.classList.add('active');
             });
+            chargerClassesFiltre();
             chargerAlertes();
         });
         
         function toggleMobileMenu() {
             const sidebar = document.querySelector('.sidebar');
-            const icon = document.querySelector('.mobile-menu-btn i');
             sidebar.classList.toggle('open');
-            if (sidebar.classList.contains('open')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
         }
-
-        document.addEventListener('click', function(event) {
-            const sidebar = document.querySelector('.sidebar');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            if (window.innerWidth <= 768) {
-                if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && sidebar.classList.contains('open')) {
-                    sidebar.classList.remove('open');
-                    document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
-                    document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
-                }
-            }
-        });
-
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    document.querySelector('.sidebar').classList.remove('open');
-                    document.querySelector('.mobile-menu-btn i').classList.remove('fa-times');
-                    document.querySelector('.mobile-menu-btn i').classList.add('fa-bars');
-                }
-            });
-        });
     </script>
 </body>
 </html>
